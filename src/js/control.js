@@ -13,6 +13,7 @@ export class Control {
 
   static requestHighStockData() {
     Kline.instance.data.lines = Kline.instance.highStockData.data
+
     console.log(Kline.instance.data)
     Kline.instance.chartMgr.updateData('frame0.k0', Kline.instance.data.lines)
     ChartManager.instance.redraw('All', false)

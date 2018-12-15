@@ -7,6 +7,8 @@ export default class HighStockData {
     console.log(this.highchart_option.series.length)
 
     this._data = []
+    this._main_lines = []
+    this._other_lines = []
 
     for (const series of this.highchart_option.series) {
       console.log(series)
@@ -28,6 +30,34 @@ export default class HighStockData {
           this._data[i].push(series.data[i].y)
         }
       }
+
+      if (series.type == 'line' && series.yAxis === 0) {
+        let line = {}
+        line.name = series.name
+        line.data = []
+        let pre_count = this._data.length - series.data.length
+        for (let i = 0; i < pre_count; ++i) {
+          line.data.push(NaN)
+        }
+        for (let i = 0; i < series.data.length; ++i) {
+          line.data.push(series.data[i].y)
+        }
+        this._main_lines.push(line)
+      }
+
+      if (series.type == 'line' && series.yAxis !== 0) {
+        let line = {}
+        line.name = series.name
+        line.data = []
+        let pre_count = this._data.length - series.data.length
+        for (let i = 0; i < pre_count; ++i) {
+          line.data.push(NaN)
+        }
+        for (let i = 0; i < series.data.length; ++i) {
+          line.data.push(series.data[i].y)
+        }
+        this._other_lines.push(line)
+      }
     }
 
     console.log(this._data)
@@ -35,5 +65,13 @@ export default class HighStockData {
 
   get data() {
     return this._data
+  }
+
+  get main_lines() {
+    return this._main_lines
+  }
+
+  get other_lines() {
+    return this._other_lines
   }
 }

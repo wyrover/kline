@@ -48,6 +48,7 @@ export default class Kline {
     this.isSized = false
     this.paused = false
     this.subscribed = null
+    this.highStockData = null
 
     this.periodMap = {
       '01w': 7 * 86400 * 1000,
@@ -98,7 +99,7 @@ export default class Kline {
 
   draw() {
     Kline.trade = new KlineTrade()
-    Kline.chartMgr = new ChartManager()
+    Kline.chartMgr = new ChartManager(this.highStockData)
 
     let view = $.parseHTML(tpl)
     for (let k in this.ranges) {
