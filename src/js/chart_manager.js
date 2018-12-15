@@ -970,6 +970,10 @@ export class ChartManager {
         indic = new indicators.STOCHRSIIndicator();
         range = new ranges.PercentageRange(areaName);
         break;
+      case 'ROVER':
+        indic = new indicators.ROVERIndicator();
+        range = new ranges.Range(areaName);
+        break;
       default:
         return null;
     }

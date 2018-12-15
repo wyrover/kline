@@ -81,6 +81,21 @@ export class ConstExpr extends Expr {
   }
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+export class CustomExpr extends Expr {
+  constructor(key) {
+    super();
+    this._key = key;
+  }
+  execute(index) {
+    //console.log(index);
+    return getRandomInt(200);
+  }
+}
+
 export class ParameterExpr extends Expr {
   constructor(name, minValue, maxValue, defaultValue) {
     super();

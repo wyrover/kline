@@ -1152,3 +1152,18 @@ export class STOCHRSIIndicator extends Indicator {
     return 'StochRSI';
   };
 }
+
+export class ROVERIndicator extends Indicator {
+  constructor() {
+    super();
+    for (let i = 0; i < 3; ++i) {
+      let PSY = new exprs.OutputExpr(`第${i}根线`, new exprs.CustomExpr('PSY'));
+      this.addOutput(PSY);
+    }
+  }
+
+  // 输出指标名称
+  getName() {
+    return 'ROVER111';
+  }
+}
