@@ -605,36 +605,33 @@ export default class Kline {
       })
 
       $('body').on('click', '#sizeIcon', function() {
-        Kline.instance.isSized = !Kline.instance.isSized
-        if (Kline.instance.isSized) {
-          $(Kline.instance.element).css({
-            position: 'fixed',
-            left: '0',
-            right: '0',
-            top: '0',
-            bottom: '0',
-            width: '100%',
-            height: '100%',
-            zIndex: '10000'
-          })
-
-          Control.onSize()
-          $('html,body').css({
-            width: '100%',
-            height: '100%',
-            overflow: 'hidden'
-          })
-        } else {
-          $(Kline.instance.element).attr('style', '')
-
-          $('html,body').attr('style', '')
-
-          Control.onSize(Kline.instance.width, Kline.instance.height)
-          $(Kline.instance.element).css({
-            visibility: 'visible',
-            height: Kline.instance.height + 'px'
-          })
-        }
+        // Kline.instance.isSized = !Kline.instance.isSized
+        // if (Kline.instance.isSized) {
+        //   $(Kline.instance.element).css({
+        //     position: 'fixed',
+        //     left: '0',
+        //     right: '0',
+        //     top: '0',
+        //     bottom: '0',
+        //     width: '100%',
+        //     height: '100%',
+        //     zIndex: '10000'
+        //   })
+        //   Control.onSize()
+        //   $('html,body').css({
+        //     width: '100%',
+        //     height: '100%',
+        //     overflow: 'hidden'
+        //   })
+        // } else {
+        //   $(Kline.instance.element).attr('style', '')
+        //   $('html,body').attr('style', '')
+        //   Control.onSize(Kline.instance.width, Kline.instance.height)
+        //   $(Kline.instance.element).css({
+        //     visibility: 'visible',
+        //     height: Kline.instance.height + 'px'
+        //   })
+        // }
       })
     })
   }
