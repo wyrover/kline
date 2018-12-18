@@ -72,6 +72,16 @@ export class ChartManager {
     return ChartManager.instance
   }
 
+  printAllAreas() {
+    console.log('uuuuuuuuuuuuuuuuuuuuuuuuuu')
+    console.log(this._areas)
+    console.log(this._chart)
+    console.log(this._timelines)
+    console.log(this._plotters)
+    console.log(this._dataSources)
+    console.log(this)
+  }
+
   redraw(layer, refresh) {
     if (layer === undefined || refresh) {
       layer = 'All'
@@ -551,6 +561,7 @@ export class ChartManager {
     if (ds === undefined || ds === null) {
       return
     }
+
     if (data !== undefined && data !== null) {
       if (!ds.update(data)) {
         return false
@@ -560,24 +571,33 @@ export class ChartManager {
     } else {
       ds.setUpdateMode(data_sources.DataSource.UpdateMode.Refresh)
     }
+
     let timeline = this.getTimeline(dsName)
+
     if (timeline !== undefined && timeline !== null) {
       timeline.update()
     }
+
     if (ds.getDataCount() < 1) {
       return true
     }
+
     let dpNames = ['.main', '.secondary']
     let area, areaName
+
     for (let n in this._areas) {
       area = this._areas[n]
+
       if (Util.isInstance(area, areas.ChartAreaGroup)) {
         continue
       }
+
       if (area.getDataSourceName() !== dsName) {
         continue
       }
+
       areaName = area.getName()
+
       for (let i = 0; i < dpNames.length; i++) {
         let dp = this.getDataProvider(areaName + dpNames[i])
         if (dp !== undefined && dp !== null) {
@@ -600,13 +620,16 @@ export class ChartManager {
       if (Util.isInstance(area, areas.ChartAreaGroup)) continue
       if (area.getDataSourceName() !== dsName) continue
       areaName = area.getName()
+
       for (let i = 0; i < dpNames.length; i++) {
         let dp = this.getDataProvider(areaName + dpNames[i])
         if (dp !== undefined && dp !== null) {
           dp.updateRange()
         }
       }
+
       let timeline = this.getTimeline(dsName)
+
       if (timeline !== undefined && timeline.getMaxItemCount() > 0) {
         let range = this.getRange(areaName)
         if (range !== undefined && range !== null) {
@@ -1167,5 +1190,9 @@ export class ChartManager {
     let cnt = tableLayout.getAreaCount() >> 1
     if (index < 0 || index >= cnt) return ''
     return tableLayout.getAreaAt(index << 1).getName()
+  }
+
+  get highStockData() {
+    return this._highStockData
   }
 }

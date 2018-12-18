@@ -9,6 +9,7 @@ export default class HighStockData {
     this._data = []
     this._main_lines = []
     this._other_lines = []
+    this._orders = []
 
     for (const series of this.highchart_option.series) {
       console.log(series)
@@ -58,6 +59,10 @@ export default class HighStockData {
         }
         this._other_lines.push(line)
       }
+
+      if (series.type == 'flags' && series.name == 'Order') {
+        this._orders = series.data
+      }
     }
 
     console.log(this._data)
@@ -73,5 +78,9 @@ export default class HighStockData {
 
   get other_lines() {
     return this._other_lines
+  }
+
+  get orders() {
+    return this._orders
   }
 }

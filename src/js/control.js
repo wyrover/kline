@@ -76,6 +76,8 @@ export class Control {
   static refreshTemplate() {
     Kline.instance.chartMgr = DefaultTemplate.loadTemplate('frame0.k0', '')
     ChartManager.instance.redraw('All', true)
+
+    Kline.instance.chartMgr.printAllAreas()
   }
 
   static chartSwitchLanguage(lang) {
