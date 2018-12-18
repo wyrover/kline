@@ -617,7 +617,6 @@ export class CandlestickPlotter extends NamedObject {
   Draw(ctx) {
     let mgr = ChartManager.instance
     console.log('iiiiiiiiiiiiiiiiiiiiiiiii')
-    console.log(this.getDataSourceName())
 
     let ds = mgr.getDataSource(this.getDataSourceName())
     if (ds.getDataCount() < 1) {
@@ -625,11 +624,19 @@ export class CandlestickPlotter extends NamedObject {
     }
 
     let area = mgr.getArea(this.getAreaName())
+
     let timeline = mgr.getTimeline(this.getDataSourceName())
     let range = mgr.getRange(this.getAreaName())
     if (range.getRange() === 0.0) {
       return
     }
+
+    console.log('DataSource Name: ' + this.getDataSourceName())
+    console.log(ds)
+    console.log('AreaName: ' + this.getAreaName())
+    console.log(area)
+    console.log(timeline)
+    console.log(range)
 
     let theme = mgr.getTheme(this.getFrameName())
     let dark = Util.isInstance(theme, themes.DarkTheme)
@@ -661,14 +668,14 @@ export class CandlestickPlotter extends NamedObject {
     console.log('K 线第一根:' + first)
     console.log('K 线最后一根:' + last)
 
-    console.log(mgr.highStockData.orders)
+    //console.log(mgr.highStockData.orders)
 
     for (let i = start; i < last; i++) {
       let data = ds.getDataAt(i)
 
-      console.log('K 线数据')
-      console.log(data)
-      console.log(mgr.highStockData.orders)
+      //console.log('K 线数据')
+      //console.log(data)
+      //console.log(mgr.highStockData.orders)
 
       let high = range.toY(data.high)
       let low = range.toY(data.low)
@@ -701,11 +708,13 @@ export class CandlestickPlotter extends NamedObject {
             h: Math.max(iH, 1)
           })
 
+        // 上涨上影线
         if (data.high > close) {
           high = Math.min(high, top - 1)
           fillPosRects.push({ x: center, y: high, w: 1, h: top - high })
         }
 
+        // 上涨下影线
         if (open > data.low) {
           low = Math.max(low, bottom + 1)
           fillPosRects.push({ x: center, y: bottom, w: 1, h: low - bottom })
@@ -729,6 +738,8 @@ export class CandlestickPlotter extends NamedObject {
         })
         if (data.high > open) high = Math.min(high, top - 1)
         if (close > data.low) low = Math.max(low, bottom + 1)
+
+        // 下跌影线
         if (high < low)
           fillNegRects.push({ x: center, y: high, w: 1, h: low - high })
       }

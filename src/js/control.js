@@ -63,15 +63,15 @@ export class Control {
     Control.chartSwitchLanguage(tmp.language || 'zh-cn')
   }
 
-  static setHttpRequestParam(symbol, range, limit, since) {
-    let str = 'symbol=' + symbol + '&range=' + range
-    if (limit !== null) str += '&limit=' + limit
-    else str += '&since=' + since
-    if (KlineTrade.instance.tradeDate.getTime() !== 0) {
-      str += '&prevTradeTime=' + KlineTrade.instance.tradeDate.getTime()
-    }
-    return str
-  }
+  // static setHttpRequestParam(symbol, range, limit, since) {
+  //   let str = 'symbol=' + symbol + '&range=' + range
+  //   if (limit !== null) str += '&limit=' + limit
+  //   else str += '&since=' + since
+  //   if (KlineTrade.instance.tradeDate.getTime() !== 0) {
+  //     str += '&prevTradeTime=' + KlineTrade.instance.tradeDate.getTime()
+  //   }
+  //   return str
+  // }
 
   static refreshTemplate() {
     Kline.instance.chartMgr = DefaultTemplate.loadTemplate('frame0.k0', '')
@@ -422,9 +422,9 @@ export class Control {
   static reset(symbol) {
     Kline.instance.symbol = symbol
 
-    if (Kline.instance.showTrade) {
-      KlineTrade.instance.reset(symbol)
-    }
+    // if (Kline.instance.showTrade) {
+    //   KlineTrade.instance.reset(symbol)
+    // }
   }
 
   static switchSymbolSelected(symbol) {

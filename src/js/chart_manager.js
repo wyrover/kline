@@ -86,10 +86,12 @@ export class ChartManager {
     if (layer === undefined || refresh) {
       layer = 'All'
     }
+
     if (layer === 'All' || layer === 'MainCanvas') {
       if (refresh) {
         this.getFrame('frame0').setChanged(true)
       }
+
       this.layout(
         this._mainContext,
         'frame0',
@@ -98,8 +100,10 @@ export class ChartManager {
         this._mainCanvas.width,
         this._mainCanvas.height
       )
+
       this.drawMain('frame0', this._mainContext)
     }
+
     if (layer === 'All' || layer === 'OverlayCanvas') {
       this._overlayContext.clearRect(
         0,
@@ -107,10 +111,12 @@ export class ChartManager {
         this._overlayCanvas.width,
         this._overlayCanvas.height
       )
+
       this.drawOverlay('frame0', this._overlayContext)
     }
   }
 
+  // 获取 canvas context
   bindCanvas(layer, canvas) {
     if (layer === 'main') {
       this._mainCanvas = canvas
@@ -134,7 +140,7 @@ export class ChartManager {
     else $(this._overlayCanvas).unbind('mousewheel')
   }
 
-  getChart(nouseParam) {
+  getChart() {
     return this._chart['defaultFrame']
   }
 
@@ -160,6 +166,7 @@ export class ChartManager {
     this._language = lang
   }
 
+  // 设置主题
   setThemeName(frameName, themeName) {
     if (themeName === undefined) themeName = 'Dark'
     let theme
@@ -177,12 +184,14 @@ export class ChartManager {
     this.getFrame(frameName).setChanged(true)
   }
 
+  // 获取主图类型
   getChartStyle(dsName) {
     let chartStyle = this._dsChartStyle[dsName]
     if (chartStyle === undefined) return 'CandleStick'
     return chartStyle
   }
 
+  // 设置主图类型
   setChartStyle(dsName, style) {
     if (this._dsChartStyle[dsName] === style) return
     let areaName = dsName + '.main'

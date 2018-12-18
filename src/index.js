@@ -4686,31 +4686,31 @@ var kline = new Kline({
 
 kline.draw()
 
-$('#resize-btn').click(function() {
-  var height = $('#height').val()
-  var width = $('#width').val()
-  kline.resize(width, height)
-})
+// $('#resize-btn').click(function() {
+//   var height = $('#height').val()
+//   var width = $('#width').val()
+//   kline.resize(width, height)
+// })
 
-$('#switch-trade-btn').click(function() {
-  kline.toggleTrade()
-})
+// $('#switch-trade-btn').click(function() {
+//   kline.toggleTrade()
+// })
 
-$('#set-symbol-btn').click(function() {
-  var symbol = $('#symbol').val()
-  var symbolName = $('#symbol-name').val()
-  kline.setSymbol(symbol, symbolName)
-})
+// $('#set-symbol-btn').click(function() {
+//   var symbol = $('#symbol').val()
+//   var symbolName = $('#symbol-name').val()
+//   kline.setSymbol(symbol, symbolName)
+// })
 
-$('#toggle-theme-btn').click(function() {
-  if (kline.theme == 'dark') {
-    kline.setTheme('light')
-  } else {
-    kline.setTheme('dark')
-  }
-})
+// $('#toggle-theme-btn').click(function() {
+//   if (kline.theme == 'dark') {
+//     kline.setTheme('light')
+//   } else {
+//     kline.setTheme('dark')
+//   }
+// })
 
-$('#set-lang-btn').click(function() {
-  var lang = $('#lang-select').val()
-  kline.setLanguage(lang)
-})
+// $('#set-lang-btn').click(function() {
+//   var lang = $('#lang-select').val()
+//   kline.setLanguage(lang)
+// })
