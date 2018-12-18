@@ -96,6 +96,33 @@ export class Plotter extends NamedObject {
     }
   }
 
+  static fillAndStrokeRects(ctx, rects, color1, color2) {
+    ctx.beginPath()
+    if (rects.length > 0) {
+      ctx.save()
+      ctx.beginPath()
+      rects.forEach(function(rect) {
+        ctx.rect(
+          rect.x + 0.5,
+          rect.y + 0.5,
+          rect.w - 1,
+          (rect.h < 0 ? -1 : 1) * Math.abs(rect.h)
+        )
+      })
+
+      if (color1 && color2) {
+        ctx.fillStyle = color1
+        ctx.fill()
+        ctx.fillStyle = color2
+        ctx.fill()
+      } else {
+        ctx.fill()
+      }
+      ctx.restore()
+    }
+    ctx.stroke()
+  }
+
   static createPolygon(ctx, points) {
     ctx.beginPath()
     ctx.moveTo(points[0].x + 0.5, points[0].y + 0.5)
@@ -307,6 +334,24 @@ export class Plotter extends NamedObject {
       flip ? target.controlPointNextY : target.controlPointPreviousY,
       target.x,
       target.y
+    )
+  }
+
+  static drawImage(ctx, img, pos) {
+    ctx.drawImage(img, pos.x, pos.y)
+  }
+
+  static drawImage2(ctx, img, sourceRect, destRect) {
+    ctx.drawImage(
+      img,
+      sourceRect.x,
+      sourceRect.y,
+      sourceRect.w,
+      sourceRect.h,
+      destRect.x,
+      destRect.y,
+      destRect.w,
+      destRect.h
     )
   }
 
@@ -582,7 +627,6 @@ export class CandlestickPlotter extends NamedObject {
     let area = mgr.getArea(this.getAreaName())
     let timeline = mgr.getTimeline(this.getDataSourceName())
     let range = mgr.getRange(this.getAreaName())
-
     if (range.getRange() === 0.0) {
       return
     }
@@ -1149,16 +1193,21 @@ export class IndicatorPlotter extends NamedObject {
     let timeline = mgr.getTimeline(this.getDataSourceName())
     let range = mgr.getRange(this.getAreaName())
     if (range.getRange() === 0.0) return
+
     let dp = mgr.getDataProvider(this.getName())
     if (!Util.isInstance(dp, data_providers.IndicatorDataProvider)) return
     let theme = mgr.getTheme(this.getFrameName())
     let cW = timeline.getColumnWidth()
+
     let first = timeline.getFirstIndex()
     let last = timeline.getLastIndex()
+
     let start
+
     if (area.isChanged() || timeline.isUpdated() || range.isUpdated())
       start = first
     else start = Math.max(first, last - 2)
+
     let indic = dp.getIndicator()
     let out,
       n,
