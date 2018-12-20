@@ -89,6 +89,16 @@ export class MainDataSource extends DataSource {
     return this._dataItems[index]
   }
 
+  indeOfDate(date) {
+    for (let i = this._dataItems.length - 1; i >= 0; --i) {
+      if (this._dataItems[i].date === date) {
+        return i
+      }
+    }
+
+    return -1
+  }
+
   update(data) {
     this._updatedCount = 0
     this._appendedCount = 0
@@ -102,50 +112,37 @@ export class MainDataSource extends DataSource {
         cnt = data.length
       for (i = 0; i < cnt; i++) {
         e = data[i]
-        if (e[0] === lastItem.date) {
-          if (
-            lastItem.open === e[1] &&
-            lastItem.high === e[2] &&
-            lastItem.low === e[3] &&
-            lastItem.close === e[4] &&
-            lastItem.volume === e[5]
-          ) {
-            this.setUpdateMode(DataSource.UpdateMode.DoNothing)
-          } else {
-            this.setUpdateMode(DataSource.UpdateMode.Update)
-            this._dataItems[lastIndex] = {
-              date: e[0],
-              open: e[1],
-              high: e[2],
-              low: e[3],
-              close: e[4],
-              volume: e[5]
-            }
-            this._updatedCount++
-          }
-          i++
-          if (i < cnt) {
-            this.setUpdateMode(DataSource.UpdateMode.Append)
-            for (; i < cnt; i++, this._appendedCount++) {
-              e = data[i]
-              this._dataItems.push({
-                date: e[0],
-                open: e[1],
-                high: e[2],
-                low: e[3],
-                close: e[4],
-                volume: e[5]
-              })
-            }
-          }
-          return true
+
+        console.log(e[0])
+        let index = this.indeOfDate(e[0])
+        if (index !== -1) {
+          this.setUpdateMode(DataSource.UpdateMode.Update)
+          this._dataItems[index].open = e[1]
+          this._dataItems[index].high = e[2]
+          this._dataItems[index].low = e[3]
+          this._dataItems[index].close = e[4]
+          this._dataItems[index].volume = e[5]
+          this._updatedCount++
+        } else {
+          this.setUpdateMode(DataSource.UpdateMode.Append)
+          this._dataItems.push({
+            date: e[0],
+            open: e[1],
+            high: e[2],
+            low: e[3],
+            close: e[4],
+            volume: e[5]
+          })
+          this._appendedCount++
         }
       }
 
-      if (cnt < Kline.instance.limit) {
-        this.setUpdateMode(DataSource.UpdateMode.DoNothing)
-        return false
-      }
+      return true
+
+      // if (cnt < Kline.instance.limit) {
+      //   this.setUpdateMode(DataSource.UpdateMode.DoNothing)
+      //   return false
+      // }
     }
 
     this.setUpdateMode(DataSource.UpdateMode.Refresh)

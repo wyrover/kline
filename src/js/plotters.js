@@ -355,85 +355,66 @@ export class Plotter extends NamedObject {
     )
   }
 
-  static drawBuyFlag(ctx, pos) {
-    let str = '开多'
-    let w = ctx.measureText(str).width
-    let h = 20
-    let rect = { x: pos.x + 0.5 - 20, y: pos.y + 0.5, w: w + 10, h: h }
+  static drawBKFlag(ctx, pos, info, color) {
+    //let str = '\u21E7'         // 卖平指令  red
+    let str = info || '\ud83e\udc45' // 买开指令  red
+    //let str = '\u21E9'         // 买平指令 green
+    //let str = '\ud83e\udc47'   // 卖开指令  green
+
+    //let str = '\ud83e\udc45'   //买平同时等量买开指令
+    //let str = '\ud83e\udc47'   //卖平同时等量卖开指令
+    //let str = '\u25CE'
+
+    //let rect = { x: pos.x, y: pos.y + 20, w: w + 10, h: h }
 
     ctx.save()
     ctx.strokeStyle = 'red'
     ctx.beginPath()
 
-    ctx.rect(rect.x, rect.y, rect.w, rect.h)
-    ctx.moveTo(rect.x + rect.w / 2, rect.y + rect.h)
-    ctx.lineTo(rect.x + rect.w / 2 + 14, rect.y + rect.h + 10)
-    ctx.stroke()
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillStyle = 'white'
-    ctx.fillText(str, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    ctx.fillStyle = color || '#FF4040'
+    ctx.font = '18px Arial'
+    ctx.fillText(str, pos.x, pos.y + 14)
     ctx.restore()
   }
 
-  static drawBPFlag(ctx, pos) {
-    let str = '平多'
-    let w = ctx.measureText(str).width
-    let h = 20
-    let rect = { x: pos.x + 0.5 - 20, y: pos.y + 0.5, w: w + 10, h: h }
-    ctx.strokeStyle = 'red'
-
+  static drawBPFlag(ctx, pos, info, color) {
+    let str = info || '\u21E9' // 买平指令 green
+    ctx.save()
     ctx.beginPath()
-    console.log('55555555555555555555555')
-    console.log(rect)
-
-    ctx.rect(rect.x, rect.y, rect.w, rect.h)
-    ctx.moveTo(rect.x + rect.w / 2, rect.y + rect.h)
-    ctx.lineTo(rect.x + rect.w / 2 + 14, rect.y + rect.h + 10)
-    ctx.stroke()
     ctx.textAlign = 'center'
-    ctx.fillStyle = 'white'
-    ctx.fillText(str, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    ctx.textBaseline = 'middle'
+    ctx.fillStyle = color || '#FF4040'
+    ctx.font = '18px Arial'
+    ctx.fillText(str, pos.x, pos.y - 14)
+    ctx.restore()
   }
 
-  static drawSKFlag(ctx, pos) {
-    let str = '开空'
-    let w = ctx.measureText(str).width
-    let h = 20
-    let rect = { x: pos.x + 0.5 - 20, y: pos.y + 0.5, w: w + 10, h: h }
-    ctx.strokeStyle = 'red'
+  static drawSKFlag(ctx, pos, info, color) {
+    let str = info || '\ud83e\udc47' // 卖开指令  green
 
+    ctx.save()
     ctx.beginPath()
-    console.log('55555555555555555555555')
-    console.log(rect)
 
-    ctx.rect(rect.x, rect.y, rect.w, rect.h)
-    ctx.moveTo(rect.x + rect.w / 2, rect.y + rect.h)
-    ctx.lineTo(rect.x + rect.w / 2 + 14, rect.y + rect.h + 10)
-    ctx.stroke()
     ctx.textAlign = 'center'
-    ctx.fillStyle = 'white'
-    ctx.fillText(str, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    ctx.textBaseline = 'middle'
+    ctx.fillStyle = color || '#40FF40'
+    ctx.font = '18px Arial'
+    ctx.fillText(str, pos.x, pos.y - 14)
+    ctx.restore()
   }
 
-  static drawSPFlag(ctx, pos) {
-    let str = '平空'
-    let w = ctx.measureText(str).width
-    let h = 20
-    let rect = { x: pos.x + 0.5 - 20, y: pos.y + 0.5, w: w + 10, h: h }
-    ctx.strokeStyle = 'red'
-
+  static drawSPFlag(ctx, pos, info, color) {
+    let str = info || '\u21E7' // 卖平指令  red
+    ctx.save()
     ctx.beginPath()
-    console.log('55555555555555555555555')
-    console.log(rect)
-
-    ctx.rect(rect.x, rect.y, rect.w, rect.h)
-    ctx.moveTo(rect.x + rect.w / 2, rect.y + rect.h)
-    ctx.lineTo(rect.x + rect.w / 2 + 14, rect.y + rect.h + 10)
-    ctx.stroke()
     ctx.textAlign = 'center'
-    ctx.fillStyle = 'white'
-    ctx.fillText(str, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    ctx.textBaseline = 'middle'
+    ctx.fillStyle = color || '#40FF40'
+    ctx.font = '18px Arial'
+    ctx.fillText(str, pos.x, pos.y + 14)
+    ctx.restore()
   }
 }
 
@@ -465,6 +446,7 @@ export class BackgroundPlotter extends Plotter {
   }
 }
 
+// 绘制背景
 export class MainAreaBackgroundPlotter extends BackgroundPlotter {
   constructor(name) {
     super(name)
@@ -489,12 +471,13 @@ export class MainAreaBackgroundPlotter extends BackgroundPlotter {
   }
 }
 
+// 绘制 Range 区背景
 export class RangeAreaBackgroundPlotter extends BackgroundPlotter {
   constructor(name) {
     super(name)
   }
 
-  Draw(context) {
+  Draw(ctx) {
     let mgr = ChartManager.instance
     let areaName = this.getAreaName()
     let area = mgr.getArea(areaName)
@@ -506,8 +489,8 @@ export class RangeAreaBackgroundPlotter extends BackgroundPlotter {
       return
     }
     let theme = mgr.getTheme(this.getFrameName())
-    context.fillStyle = theme.getColor(this._color)
-    context.fillRect(
+    ctx.fillStyle = theme.getColor(this._color)
+    ctx.fillRect(
       area.getLeft(),
       area.getTop(),
       area.getWidth(),
@@ -686,13 +669,6 @@ export class CandlestickPlotter extends NamedObject {
         let bottom = range.toY(open)
         let iH = Math.max(bottom - top, 1)
 
-        // for (const order of mgr.highStockData.orders) {
-        //   console.log(order.x)
-        //   // if (order.x == data.date) {
-        Plotter.drawBuyFlag(ctx, { x: left, y: high - 30 })
-        //   // }
-        // }
-
         if (iH > 1 && iW > 1 && dark)
           strokePosRects.push({
             x: left + 0.5,
@@ -743,6 +719,22 @@ export class CandlestickPlotter extends NamedObject {
         if (high < low)
           fillNegRects.push({ x: center, y: high, w: 1, h: low - high })
       }
+
+      for (const signal of mgr.highStockData.signals) {
+        if (signal.x == data.date) {
+          if (signal.title == 'BK') {
+            Plotter.drawBKFlag(ctx, { x: center, y: low })
+          } else if (signal.title == 'SK') {
+            Plotter.drawSKFlag(ctx, { x: center, y: high })
+          } else if (signal.title == 'BP') {
+            Plotter.drawBPFlag(ctx, { x: center, y: high })
+          } else if ((signal.title = 'SP')) {
+            Plotter.drawSPFlag(ctx, { x: center, y: low })
+          }
+          break
+        }
+      }
+
       left += cW
       center += cW
     }
@@ -909,12 +901,13 @@ export class CandlestickHLCPlotter extends Plotter {
   }
 }
 
+// 美国线
 export class OHLCPlotter extends Plotter {
   constructor(name) {
     super(name)
   }
 
-  Draw(context) {
+  Draw(ctx) {
     let mgr = ChartManager.instance
     let ds = mgr.getDataSource(this.getDataSourceName())
     if (
@@ -974,38 +967,39 @@ export class OHLCPlotter extends Plotter {
       right += cW
     }
     if (fillPosRects.length > 0) {
-      context.fillStyle = theme.getColor(themes.Theme.Color.Positive)
-      Plotter.createRectangles(context, fillPosRects)
-      context.fill()
+      ctx.fillStyle = theme.getColor(themes.Theme.Color.Positive)
+      Plotter.createRectangles(ctx, fillPosRects)
+      ctx.fill()
     }
     if (fillUchRects.length > 0) {
-      context.fillStyle = theme.getColor(themes.Theme.Color.Negative)
-      Plotter.createRectangles(context, fillUchRects)
-      context.fill()
+      ctx.fillStyle = theme.getColor(themes.Theme.Color.Negative)
+      Plotter.createRectangles(ctx, fillUchRects)
+      ctx.fill()
     }
     if (fillNegRects.length > 0) {
-      context.fillStyle = theme.getColor(themes.Theme.Color.Negative)
-      Plotter.createRectangles(context, fillNegRects)
-      context.fill()
+      ctx.fillStyle = theme.getColor(themes.Theme.Color.Negative)
+      Plotter.createRectangles(ctx, fillNegRects)
+      ctx.fill()
     }
   }
 }
 
+// 主图指标信息
 export class MainInfoPlotter extends Plotter {
   constructor(name) {
     super(name)
   }
 
-  Draw(context) {
+  Draw(ctx) {
     let mgr = ChartManager.instance
     let area = mgr.getArea(this.getAreaName())
     let timeline = mgr.getTimeline(this.getDataSourceName())
     let ds = mgr.getDataSource(this.getDataSourceName())
     let theme = mgr.getTheme(this.getFrameName())
-    context.font = theme.getFont(themes.Theme.Font.Default)
-    context.textAlign = 'left'
-    context.textBaseline = 'top'
-    context.fillStyle = theme.getColor(themes.Theme.Color.Text4)
+    ctx.font = theme.getFont(themes.Theme.Font.Default)
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'top'
+    ctx.fillStyle = theme.getColor(themes.Theme.Color.Text4)
     let rect = {
       x: area.getLeft() + 4,
       y: area.getTop() + 2,
@@ -1027,78 +1021,46 @@ export class MainInfoPlotter extends Plotter {
       // if (!Plotter.drawString(context, '时间: ' +
       //         year + '-' + month + '-' + date + '  ' + hour + ':' + minute, rect))
       //     return;
-      if (
-        !Plotter.drawString(context, '  开: ' + data.open.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  开: ' + data.open.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  高: ' + data.high.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  高: ' + data.high.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  低: ' + data.low.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  低: ' + data.low.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(
-          context,
-          '  收: ' + data.close.toFixed(digits),
-          rect
-        )
-      )
+      if (!Plotter.drawString(ctx, '  收: ' + data.close.toFixed(digits), rect))
         return
     } else if (lang === 'en-us') {
       // if (!Plotter.drawString(context, 'DATE: ' +
       //         year + '-' + month + '-' + date + '  ' + hour + ':' + minute, rect))
       //     return;
-      if (
-        !Plotter.drawString(context, '  O: ' + data.open.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  O: ' + data.open.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  H: ' + data.high.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  H: ' + data.high.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  L: ' + data.low.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  L: ' + data.low.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  C: ' + data.close.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  C: ' + data.close.toFixed(digits), rect))
         return
     } else if (lang === 'zh-tw') {
       // if (!Plotter.drawString(context, '時間: ' +
       //         year + '-' + month + '-' + date + '  ' + hour + ':' + minute, rect))
       //     return;
-      if (
-        !Plotter.drawString(context, '  開: ' + data.open.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  開: ' + data.open.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  高: ' + data.high.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  高: ' + data.high.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(context, '  低: ' + data.low.toFixed(digits), rect)
-      )
+      if (!Plotter.drawString(ctx, '  低: ' + data.low.toFixed(digits), rect))
         return
-      if (
-        !Plotter.drawString(
-          context,
-          '  收: ' + data.close.toFixed(digits),
-          rect
-        )
-      )
+      if (!Plotter.drawString(ctx, '  收: ' + data.close.toFixed(digits), rect))
         return
     }
     if (selIndex > 0) {
       if (lang === 'zh-cn') {
-        if (!Plotter.drawString(context, '  涨幅: ', rect)) return
+        if (!Plotter.drawString(ctx, '  涨幅: ', rect)) return
       } else if (lang === 'en-us') {
-        if (!Plotter.drawString(context, '  CHANGE: ', rect)) return
+        if (!Plotter.drawString(ctx, '  CHANGE: ', rect)) return
       } else if (lang === 'zh-tw') {
-        if (!Plotter.drawString(context, '  漲幅: ', rect)) return
+        if (!Plotter.drawString(ctx, '  漲幅: ', rect)) return
       }
       let prev = ds.getDataAt(selIndex - 1)
       let change
@@ -1110,14 +1072,14 @@ export class MainInfoPlotter extends Plotter {
 
       if (change >= 0) {
         change = ' ' + change.toFixed(2)
-        context.fillStyle = theme.getColor(themes.Theme.Color.TextPositive)
+        ctx.fillStyle = theme.getColor(themes.Theme.Color.TextPositive)
       } else {
         change = change.toFixed(2)
-        context.fillStyle = theme.getColor(themes.Theme.Color.TextNegative)
+        ctx.fillStyle = theme.getColor(themes.Theme.Color.TextNegative)
       }
-      if (!Plotter.drawString(context, change, rect)) return
-      context.fillStyle = theme.getColor(themes.Theme.Color.Text4)
-      if (!Plotter.drawString(context, ' %', rect)) return
+      if (!Plotter.drawString(ctx, change, rect)) return
+      ctx.fillStyle = theme.getColor(themes.Theme.Color.Text4)
+      if (!Plotter.drawString(ctx, ' %', rect)) return
     }
 
     let amplitude
@@ -1129,11 +1091,7 @@ export class MainInfoPlotter extends Plotter {
 
     if (lang === 'zh-cn') {
       if (
-        !Plotter.drawString(
-          context,
-          '  振幅: ' + amplitude.toFixed(2) + ' %',
-          rect
-        )
+        !Plotter.drawString(ctx, '  振幅: ' + amplitude.toFixed(2) + ' %', rect)
       ) {
         return
       }
@@ -1143,7 +1101,7 @@ export class MainInfoPlotter extends Plotter {
     } else if (lang === 'en-us') {
       if (
         !Plotter.drawString(
-          context,
+          ctx,
           '  AMPLITUDE: ' + amplitude.toFixed(2) + ' %',
           rect
         )
@@ -1155,11 +1113,7 @@ export class MainInfoPlotter extends Plotter {
       // }
     } else if (lang === 'zh-tw') {
       if (
-        !Plotter.drawString(
-          context,
-          '  振幅: ' + amplitude.toFixed(2) + ' %',
-          rect
-        )
+        !Plotter.drawString(ctx, '  振幅: ' + amplitude.toFixed(2) + ' %', rect)
       ) {
         return
       }
@@ -1185,20 +1139,21 @@ export class MainInfoPlotter extends Plotter {
       if (color === undefined) {
         color = themes.Theme.Color.Indicator0 + n
       }
-      context.fillStyle = theme.getColor(color)
-      if (!Plotter.drawString(context, info, rect)) {
+      ctx.fillStyle = theme.getColor(color)
+      if (!Plotter.drawString(ctx, info, rect)) {
         return
       }
     }
   }
 }
 
+// 绘制副图指标
 export class IndicatorPlotter extends NamedObject {
   constructor(name) {
     super(name)
   }
 
-  Draw(context) {
+  Draw(ctx) {
     let mgr = ChartManager.instance
     let area = mgr.getArea(this.getAreaName())
     let timeline = mgr.getTimeline(this.getDataSourceName())
@@ -1228,7 +1183,7 @@ export class IndicatorPlotter extends NamedObject {
       let style = out.getStyle()
       if (style === exprs.OutputExpr.outputStyle.VolumeStick) {
         this.drawVolumeStick(
-          context,
+          ctx,
           theme,
           mgr.getDataSource(this.getDataSourceName()),
           start,
@@ -1240,19 +1195,19 @@ export class IndicatorPlotter extends NamedObject {
         )
       } else if (style === exprs.OutputExpr.outputStyle.MACDStick) {
         this.drawMACDStick(
-          context,
+          ctx,
           theme,
           out,
           start,
           last,
           timeline.toItemLeft(start),
           cW,
-          timeline.getItemWidth(),
+          1,
           range
         )
       } else if (style === exprs.OutputExpr.outputStyle.SARPoint) {
         this.drawSARPoint(
-          context,
+          ctx,
           theme,
           out,
           start,
@@ -1266,10 +1221,10 @@ export class IndicatorPlotter extends NamedObject {
     }
     let left = timeline.toColumnLeft(start)
     let center = timeline.toItemCenter(start)
-    context.save()
-    context.rect(left, area.getTop(), area.getRight() - left, area.getHeight())
-    context.clip()
-    context.translate(0.5, 0.5)
+    ctx.save()
+    ctx.rect(left, area.getTop(), area.getRight() - left, area.getHeight())
+    ctx.clip()
+    ctx.translate(0.5, 0.5)
     for (n = 0; n < outCount; n++) {
       let x = center
       out = indic.getOutputAt(n)
@@ -1287,12 +1242,12 @@ export class IndicatorPlotter extends NamedObject {
         if (points.length > 0) {
           let color = out.getColor()
           if (color === undefined) color = themes.Theme.Color.Indicator0 + n
-          context.strokeStyle = theme.getColor(color)
-          Plotter.drawLines(context, points)
+          ctx.strokeStyle = theme.getColor(color)
+          Plotter.drawLines(ctx, points)
         }
       }
     }
-    context.restore()
+    ctx.restore()
   }
 
   drawVolumeStick(context, theme, ds, first, last, startX, cW, iW, range) {
@@ -1445,7 +1400,7 @@ export class IndicatorPlotter extends NamedObject {
   drawSARPoint(context, theme, output, first, last, startX, cW, iW, range) {
     let r = iW >> 1
     if (r < 0.5) r = 0.5
-    if (r > 4) r = 4
+    if (r > 1) r = 1
     let center = startX
     let right = center + r
     let endAngle = 2 * Math.PI
@@ -1465,6 +1420,7 @@ export class IndicatorPlotter extends NamedObject {
   }
 }
 
+// 绘制指标信息
 export class IndicatorInfoPlotter extends Plotter {
   constructor(name) {
     super(name)
@@ -1553,6 +1509,7 @@ export class IndicatorInfoPlotter extends Plotter {
   }
 }
 
+// 绘制可视区最高最低价
 export class MinMaxPlotter extends NamedObject {
   constructor(name) {
     super(name)
@@ -1620,6 +1577,7 @@ export class MinMaxPlotter extends NamedObject {
   }
 }
 
+// 绘制时间轴
 export class TimelinePlotter extends Plotter {
   static TP_MINUTE = 60 * 1000
   static TP_HOUR = 60 * TimelinePlotter.TP_MINUTE
@@ -1752,6 +1710,7 @@ export class TimelinePlotter extends Plotter {
   }
 }
 
+// 绘制 Range 区
 export class RangePlotter extends NamedObject {
   constructor(name) {
     super(name)
@@ -1801,435 +1760,436 @@ export class RangePlotter extends NamedObject {
   }
 }
 
-export class COrderGraphPlotter extends NamedObject {
-  constructor(name) {
-    super(name)
-  }
+// export class COrderGraphPlotter extends NamedObject {
+//   constructor(name) {
+//     super(name)
+//   }
 
-  Draw(context) {
-    return this._Draw_(context)
-  }
+//   Draw(context) {
+//     return this._Draw_(context)
+//   }
 
-  _Draw_(context) {
-    if (this.Update() === false) return
-    if (this.updateData() === false) return
-    this.m_top = this.m_pArea.getTop()
-    this.m_bottom = this.m_pArea.getBottom()
-    this.m_left = this.m_pArea.getLeft()
-    this.m_right = this.m_pArea.getRight()
-    context.save()
-    context.rect(
-      this.m_left,
-      this.m_top,
-      this.m_right - this.m_left,
-      this.m_bottom - this.m_top
-    )
-    context.clip()
-    let all = ChartManager.instance.getChart()._depthData
-    this.x_offset = 0
-    this.y_offset = 0
-    let ask_tmp = {}
-    let bid_tmp = {}
-    ask_tmp.x = this.m_left + all.array[this.m_ask_si].amounts * this.m_Step
-    ask_tmp.y = this.m_pRange.toY(all.array[this.m_ask_si].rate)
-    bid_tmp.x = this.m_left + all.array[this.m_bid_si].amounts * this.m_Step
-    bid_tmp.y = this.m_pRange.toY(all.array[this.m_bid_si].rate)
-    if (Math.abs(ask_tmp.y - bid_tmp.y) < 1) {
-      this.y_offset = 1
-    }
-    this.x_offset = 1
-    this.DrawBackground(context)
-    this.UpdatePoints()
-    this.FillBlack(context)
-    this.DrawGradations(context)
-    this.DrawLine(context)
-    context.restore()
-  }
+//   _Draw_(context) {
+//     if (this.Update() === false) return
+//     if (this.updateData() === false) return
+//     this.m_top = this.m_pArea.getTop()
+//     this.m_bottom = this.m_pArea.getBottom()
+//     this.m_left = this.m_pArea.getLeft()
+//     this.m_right = this.m_pArea.getRight()
+//     context.save()
+//     context.rect(
+//       this.m_left,
+//       this.m_top,
+//       this.m_right - this.m_left,
+//       this.m_bottom - this.m_top
+//     )
+//     context.clip()
+//     let all = ChartManager.instance.getChart()._depthData
+//     this.x_offset = 0
+//     this.y_offset = 0
+//     let ask_tmp = {}
+//     let bid_tmp = {}
+//     ask_tmp.x = this.m_left + all.array[this.m_ask_si].amounts * this.m_Step
+//     ask_tmp.y = this.m_pRange.toY(all.array[this.m_ask_si].rate)
+//     bid_tmp.x = this.m_left + all.array[this.m_bid_si].amounts * this.m_Step
+//     bid_tmp.y = this.m_pRange.toY(all.array[this.m_bid_si].rate)
+//     if (Math.abs(ask_tmp.y - bid_tmp.y) < 1) {
+//       this.y_offset = 1
+//     }
+//     this.x_offset = 1
+//     this.DrawBackground(context)
+//     this.UpdatePoints()
+//     this.FillBlack(context)
+//     this.DrawGradations(context)
+//     this.DrawLine(context)
+//     context.restore()
+//   }
 
-  DrawBackground(context) {
-    context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Background)
-    context.fillRect(
-      this.m_left,
-      this.m_top,
-      this.m_right - this.m_left,
-      this.m_bottom - this.m_top
-    )
-    let all = ChartManager.instance.getChart()._depthData
-    if (this.m_mode === 0) {
-      let ask_bottom =
-        this.m_pRange.toY(all.array[this.m_ask_si].rate) - this.y_offset
-      let bid_top =
-        this.m_pRange.toY(all.array[this.m_bid_si].rate) + this.y_offset
-      let ask_gradient = context.createLinearGradient(
-        this.m_left,
-        0,
-        this.m_right,
-        0
-      )
-      ask_gradient.addColorStop(
-        0,
-        this.m_pTheme.getColor(themes.Theme.Color.Background)
-      )
-      ask_gradient.addColorStop(
-        1,
-        this.m_pTheme.getColor(themes.Theme.Color.PositiveDark)
-      )
-      context.fillStyle = ask_gradient
-      context.fillRect(
-        this.m_left,
-        this.m_top,
-        this.m_right - this.m_left,
-        ask_bottom - this.m_top
-      )
-      let bid_gradient = context.createLinearGradient(
-        this.m_left,
-        0,
-        this.m_right,
-        0
-      )
-      bid_gradient.addColorStop(
-        0,
-        this.m_pTheme.getColor(themes.Theme.Color.Background)
-      )
-      bid_gradient.addColorStop(
-        1,
-        this.m_pTheme.getColor(themes.Theme.Color.NegativeDark)
-      )
-      context.fillStyle = bid_gradient
-      context.fillRect(
-        this.m_left,
-        bid_top,
-        this.m_right - this.m_left,
-        this.m_bottom - bid_top
-      )
-    } else if (this.m_mode === 1) {
-      let ask_gradient = context.createLinearGradient(
-        this.m_left,
-        0,
-        this.m_right,
-        0
-      )
-      ask_gradient.addColorStop(
-        0,
-        this.m_pTheme.getColor(themes.Theme.Color.Background)
-      )
-      ask_gradient.addColorStop(
-        1,
-        this.m_pTheme.getColor(themes.Theme.Color.PositiveDark)
-      )
-      context.fillStyle = ask_gradient
-      context.fillRect(
-        this.m_left,
-        this.m_top,
-        this.m_right - this.m_left,
-        this.m_bottom - this.m_top
-      )
-    } else if (this.m_mode === 2) {
-      let bid_gradient = context.createLinearGradient(
-        this.m_left,
-        0,
-        this.m_right,
-        0
-      )
-      bid_gradient.addColorStop(
-        0,
-        this.m_pTheme.getColor(themes.Theme.Color.Background)
-      )
-      bid_gradient.addColorStop(
-        1,
-        this.m_pTheme.getColor(themes.Theme.Color.NegativeDark)
-      )
-      context.fillStyle = bid_gradient
-      context.fillRect(
-        this.m_left,
-        this.m_top,
-        this.m_right - this.m_left,
-        this.m_bottom - this.m_top
-      )
-    }
-  }
+//   DrawBackground(context) {
+//     context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Background)
+//     context.fillRect(
+//       this.m_left,
+//       this.m_top,
+//       this.m_right - this.m_left,
+//       this.m_bottom - this.m_top
+//     )
+//     let all = ChartManager.instance.getChart()._depthData
+//     if (this.m_mode === 0) {
+//       let ask_bottom =
+//         this.m_pRange.toY(all.array[this.m_ask_si].rate) - this.y_offset
+//       let bid_top =
+//         this.m_pRange.toY(all.array[this.m_bid_si].rate) + this.y_offset
+//       let ask_gradient = context.createLinearGradient(
+//         this.m_left,
+//         0,
+//         this.m_right,
+//         0
+//       )
+//       ask_gradient.addColorStop(
+//         0,
+//         this.m_pTheme.getColor(themes.Theme.Color.Background)
+//       )
+//       ask_gradient.addColorStop(
+//         1,
+//         this.m_pTheme.getColor(themes.Theme.Color.PositiveDark)
+//       )
+//       context.fillStyle = ask_gradient
+//       context.fillRect(
+//         this.m_left,
+//         this.m_top,
+//         this.m_right - this.m_left,
+//         ask_bottom - this.m_top
+//       )
+//       let bid_gradient = context.createLinearGradient(
+//         this.m_left,
+//         0,
+//         this.m_right,
+//         0
+//       )
+//       bid_gradient.addColorStop(
+//         0,
+//         this.m_pTheme.getColor(themes.Theme.Color.Background)
+//       )
+//       bid_gradient.addColorStop(
+//         1,
+//         this.m_pTheme.getColor(themes.Theme.Color.NegativeDark)
+//       )
+//       context.fillStyle = bid_gradient
+//       context.fillRect(
+//         this.m_left,
+//         bid_top,
+//         this.m_right - this.m_left,
+//         this.m_bottom - bid_top
+//       )
+//     } else if (this.m_mode === 1) {
+//       let ask_gradient = context.createLinearGradient(
+//         this.m_left,
+//         0,
+//         this.m_right,
+//         0
+//       )
+//       ask_gradient.addColorStop(
+//         0,
+//         this.m_pTheme.getColor(themes.Theme.Color.Background)
+//       )
+//       ask_gradient.addColorStop(
+//         1,
+//         this.m_pTheme.getColor(themes.Theme.Color.PositiveDark)
+//       )
+//       context.fillStyle = ask_gradient
+//       context.fillRect(
+//         this.m_left,
+//         this.m_top,
+//         this.m_right - this.m_left,
+//         this.m_bottom - this.m_top
+//       )
+//     } else if (this.m_mode === 2) {
+//       let bid_gradient = context.createLinearGradient(
+//         this.m_left,
+//         0,
+//         this.m_right,
+//         0
+//       )
+//       bid_gradient.addColorStop(
+//         0,
+//         this.m_pTheme.getColor(themes.Theme.Color.Background)
+//       )
+//       bid_gradient.addColorStop(
+//         1,
+//         this.m_pTheme.getColor(themes.Theme.Color.NegativeDark)
+//       )
+//       context.fillStyle = bid_gradient
+//       context.fillRect(
+//         this.m_left,
+//         this.m_top,
+//         this.m_right - this.m_left,
+//         this.m_bottom - this.m_top
+//       )
+//     }
+//   }
 
-  DrawLine(context) {
-    if (this.m_mode === 0 || this.m_mode === 1) {
-      context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Positive)
-      context.beginPath()
-      context.moveTo(
-        Math.floor(this.m_ask_points[0].x) + 0.5,
-        Math.floor(this.m_ask_points[0].y) + 0.5
-      )
-      for (let i = 1; i < this.m_ask_points.length; i++) {
-        context.lineTo(
-          Math.floor(this.m_ask_points[i].x) + 0.5,
-          Math.floor(this.m_ask_points[i].y) + 0.5
-        )
-      }
-      context.stroke()
-    }
-    if (this.m_mode === 0 || this.m_mode === 2) {
-      context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Negative)
-      context.beginPath()
-      context.moveTo(this.m_bid_points[0].x + 0.5, this.m_bid_points[0].y + 0.5)
-      for (let i = 1; i < this.m_bid_points.length; i++) {
-        context.lineTo(
-          this.m_bid_points[i].x + 0.5,
-          this.m_bid_points[i].y + 0.5
-        )
-      }
-      context.stroke()
-    }
-  }
+//   DrawLine(context) {
+//     if (this.m_mode === 0 || this.m_mode === 1) {
+//       context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Positive)
+//       context.beginPath()
+//       context.moveTo(
+//         Math.floor(this.m_ask_points[0].x) + 0.5,
+//         Math.floor(this.m_ask_points[0].y) + 0.5
+//       )
+//       for (let i = 1; i < this.m_ask_points.length; i++) {
+//         context.lineTo(
+//           Math.floor(this.m_ask_points[i].x) + 0.5,
+//           Math.floor(this.m_ask_points[i].y) + 0.5
+//         )
+//       }
+//       context.stroke()
+//     }
+//     if (this.m_mode === 0 || this.m_mode === 2) {
+//       context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Negative)
+//       context.beginPath()
+//       context.moveTo(this.m_bid_points[0].x + 0.5, this.m_bid_points[0].y + 0.5)
+//       for (let i = 1; i < this.m_bid_points.length; i++) {
+//         context.lineTo(
+//           this.m_bid_points[i].x + 0.5,
+//           this.m_bid_points[i].y + 0.5
+//         )
+//       }
+//       context.stroke()
+//     }
+//   }
 
-  UpdatePoints() {
-    let all = ChartManager.instance.getChart()._depthData
-    this.m_ask_points = []
-    let index_ask = {}
-    index_ask.x = Math.floor(this.m_left)
-    index_ask.y = Math.floor(
-      this.m_pRange.toY(all.array[this.m_ask_si].rate) - this.y_offset
-    )
-    this.m_ask_points.push(index_ask)
-    let ask_p_i = 0
-    for (let i = this.m_ask_si; i >= this.m_ask_ei; i--) {
-      let index0 = {}
-      let index1 = {}
-      if (i === this.m_ask_si) {
-        index0.x = Math.floor(
-          this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
-        )
-        index0.y = Math.floor(
-          this.m_pRange.toY(all.array[i].rate) - this.y_offset
-        )
-        this.m_ask_points.push(index0)
-        ask_p_i = 1
-      } else {
-        index0.x = Math.floor(
-          this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
-        )
-        index0.y = Math.floor(this.m_ask_points[ask_p_i].y)
-        index1.x = Math.floor(index0.x)
-        index1.y = Math.floor(
-          this.m_pRange.toY(all.array[i].rate) - this.y_offset
-        )
-        this.m_ask_points.push(index0)
-        ask_p_i++
-        this.m_ask_points.push(index1)
-        ask_p_i++
-      }
-    }
-    this.m_bid_points = []
-    let index_bid = {}
-    index_bid.x = Math.floor(this.m_left)
-    index_bid.y = Math.ceil(
-      this.m_pRange.toY(all.array[this.m_bid_si].rate) + this.y_offset
-    )
-    this.m_bid_points.push(index_bid)
-    let bid_p_i = 0
-    for (let i = this.m_bid_si; i <= this.m_bid_ei; i++) {
-      let index0 = {}
-      let index1 = {}
-      if (i === this.m_bid_si) {
-        index0.x = Math.floor(
-          this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
-        )
-        index0.y = Math.ceil(
-          this.m_pRange.toY(all.array[i].rate) + this.y_offset
-        )
-        this.m_bid_points.push(index0)
-        bid_p_i = 1
-      } else {
-        index0.x = Math.floor(
-          this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
-        )
-        index0.y = Math.ceil(this.m_bid_points[bid_p_i].y)
-        index1.x = Math.floor(index0.x)
-        index1.y = Math.ceil(
-          this.m_pRange.toY(all.array[i].rate) + this.x_offset
-        )
-        this.m_bid_points.push(index0)
-        bid_p_i++
-        this.m_bid_points.push(index1)
-        bid_p_i++
-      }
-    }
-  }
+//   UpdatePoints() {
+//     let all = ChartManager.instance.getChart()._depthData
+//     this.m_ask_points = []
+//     let index_ask = {}
+//     index_ask.x = Math.floor(this.m_left)
+//     index_ask.y = Math.floor(
+//       this.m_pRange.toY(all.array[this.m_ask_si].rate) - this.y_offset
+//     )
+//     this.m_ask_points.push(index_ask)
+//     let ask_p_i = 0
+//     for (let i = this.m_ask_si; i >= this.m_ask_ei; i--) {
+//       let index0 = {}
+//       let index1 = {}
+//       if (i === this.m_ask_si) {
+//         index0.x = Math.floor(
+//           this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
+//         )
+//         index0.y = Math.floor(
+//           this.m_pRange.toY(all.array[i].rate) - this.y_offset
+//         )
+//         this.m_ask_points.push(index0)
+//         ask_p_i = 1
+//       } else {
+//         index0.x = Math.floor(
+//           this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
+//         )
+//         index0.y = Math.floor(this.m_ask_points[ask_p_i].y)
+//         index1.x = Math.floor(index0.x)
+//         index1.y = Math.floor(
+//           this.m_pRange.toY(all.array[i].rate) - this.y_offset
+//         )
+//         this.m_ask_points.push(index0)
+//         ask_p_i++
+//         this.m_ask_points.push(index1)
+//         ask_p_i++
+//       }
+//     }
+//     this.m_bid_points = []
+//     let index_bid = {}
+//     index_bid.x = Math.floor(this.m_left)
+//     index_bid.y = Math.ceil(
+//       this.m_pRange.toY(all.array[this.m_bid_si].rate) + this.y_offset
+//     )
+//     this.m_bid_points.push(index_bid)
+//     let bid_p_i = 0
+//     for (let i = this.m_bid_si; i <= this.m_bid_ei; i++) {
+//       let index0 = {}
+//       let index1 = {}
+//       if (i === this.m_bid_si) {
+//         index0.x = Math.floor(
+//           this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
+//         )
+//         index0.y = Math.ceil(
+//           this.m_pRange.toY(all.array[i].rate) + this.y_offset
+//         )
+//         this.m_bid_points.push(index0)
+//         bid_p_i = 1
+//       } else {
+//         index0.x = Math.floor(
+//           this.m_left + all.array[i].amounts * this.m_Step + this.x_offset
+//         )
+//         index0.y = Math.ceil(this.m_bid_points[bid_p_i].y)
+//         index1.x = Math.floor(index0.x)
+//         index1.y = Math.ceil(
+//           this.m_pRange.toY(all.array[i].rate) + this.x_offset
+//         )
+//         this.m_bid_points.push(index0)
+//         bid_p_i++
+//         this.m_bid_points.push(index1)
+//         bid_p_i++
+//       }
+//     }
+//   }
 
-  updateData() {
-    let all = ChartManager.instance.getChart()._depthData
-    if (all.array === null) return false
-    if (all.array.length <= 50) return false
-    let minRange = this.m_pRange.getOuterMinValue()
-    let maxRange = this.m_pRange.getOuterMaxValue()
-    this.m_ask_si = all.asks_si
-    this.m_ask_ei = all.asks_si
-    for (let i = all.asks_si; i >= all.asks_ei; i--) {
-      if (all.array[i].rate < maxRange) this.m_ask_ei = i
-      else break
-    }
-    this.m_bid_si = all.bids_si
-    this.m_bid_ei = all.bids_si
-    for (let i = all.bids_si; i <= all.bids_ei; i++) {
-      if (all.array[i].rate > minRange) this.m_bid_ei = i
-      else break
-    }
-    if (this.m_ask_ei === this.m_ask_si) this.m_mode = 2
-    else if (this.m_bid_ei === this.m_bid_si) this.m_mode = 1
-    else this.m_mode = 0
-    this.m_Step = this.m_pArea.getWidth()
-    if (this.m_mode === 0) {
-      /*
-       * View: B     --------    T
-       * Data: Lo      -----     Hi
-       */
-      if (this.m_ask_ei === all.asks_ei && this.m_bid_ei === all.bids_ei) {
-        this.m_Step /= Math.min(
-          all.array[this.m_ask_ei].amounts,
-          all.array[this.m_bid_ei].amounts
-        )
-      } else if (
-        /*
-         * View: B     --------     T
-         * Data: Lo         -----   Hi
-         */
-        this.m_ask_ei !== all.asks_ei &&
-        this.m_bid_ei === all.bids_ei
-      ) {
-        this.m_Step /= all.array[this.m_bid_ei].amounts
-      } else if (
-        /*
-         * View: B     --------    T
-         * Data: Lo  -----         Hi
-         */
-        this.m_ask_ei === all.asks_ei &&
-        this.m_bid_ei !== all.bids_ei
-      ) {
-        this.m_Step /= all.array[this.m_ask_ei].amounts
-      } else if (
-        /*
-         * View: B     --------    T
-         * Data: Lo  ------------  Hi
-         */
-        this.m_ask_ei !== all.asks_ei &&
-        this.m_bid_ei !== all.bids_ei
-      ) {
-        this.m_Step /= Math.max(
-          all.array[this.m_ask_ei].amounts,
-          all.array[this.m_bid_ei].amounts
-        )
-      }
-    } else if (this.m_mode === 1) {
-      this.m_Step /= all.array[this.m_ask_ei].amounts
-    } else if (this.m_mode === 2) {
-      this.m_Step /= all.array[this.m_bid_ei].amounts
-    }
-    return true
-  }
+//   updateData() {
+//     let all = ChartManager.instance.getChart()._depthData
+//     if (all.array === null) return false
+//     if (all.array.length <= 50) return false
+//     let minRange = this.m_pRange.getOuterMinValue()
+//     let maxRange = this.m_pRange.getOuterMaxValue()
+//     this.m_ask_si = all.asks_si
+//     this.m_ask_ei = all.asks_si
+//     for (let i = all.asks_si; i >= all.asks_ei; i--) {
+//       if (all.array[i].rate < maxRange) this.m_ask_ei = i
+//       else break
+//     }
+//     this.m_bid_si = all.bids_si
+//     this.m_bid_ei = all.bids_si
+//     for (let i = all.bids_si; i <= all.bids_ei; i++) {
+//       if (all.array[i].rate > minRange) this.m_bid_ei = i
+//       else break
+//     }
+//     if (this.m_ask_ei === this.m_ask_si) this.m_mode = 2
+//     else if (this.m_bid_ei === this.m_bid_si) this.m_mode = 1
+//     else this.m_mode = 0
+//     this.m_Step = this.m_pArea.getWidth()
+//     if (this.m_mode === 0) {
+//       /*
+//        * View: B     --------    T
+//        * Data: Lo      -----     Hi
+//        */
+//       if (this.m_ask_ei === all.asks_ei && this.m_bid_ei === all.bids_ei) {
+//         this.m_Step /= Math.min(
+//           all.array[this.m_ask_ei].amounts,
+//           all.array[this.m_bid_ei].amounts
+//         )
+//       } else if (
+//         /*
+//          * View: B     --------     T
+//          * Data: Lo         -----   Hi
+//          */
+//         this.m_ask_ei !== all.asks_ei &&
+//         this.m_bid_ei === all.bids_ei
+//       ) {
+//         this.m_Step /= all.array[this.m_bid_ei].amounts
+//       } else if (
+//         /*
+//          * View: B     --------    T
+//          * Data: Lo  -----         Hi
+//          */
+//         this.m_ask_ei === all.asks_ei &&
+//         this.m_bid_ei !== all.bids_ei
+//       ) {
+//         this.m_Step /= all.array[this.m_ask_ei].amounts
+//       } else if (
+//         /*
+//          * View: B     --------    T
+//          * Data: Lo  ------------  Hi
+//          */
+//         this.m_ask_ei !== all.asks_ei &&
+//         this.m_bid_ei !== all.bids_ei
+//       ) {
+//         this.m_Step /= Math.max(
+//           all.array[this.m_ask_ei].amounts,
+//           all.array[this.m_bid_ei].amounts
+//         )
+//       }
+//     } else if (this.m_mode === 1) {
+//       this.m_Step /= all.array[this.m_ask_ei].amounts
+//     } else if (this.m_mode === 2) {
+//       this.m_Step /= all.array[this.m_bid_ei].amounts
+//     }
+//     return true
+//   }
 
-  Update() {
-    this.m_pMgr = ChartManager.instance
-    let areaName = this.getAreaName()
-    this.m_pArea = this.m_pMgr.getArea(areaName)
-    if (this.m_pArea === null) return false
-    let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
-    this.m_pRange = this.m_pMgr.getRange(rangeName)
-    if (this.m_pRange === null || this.m_pRange.getRange() === 0.0) return false
-    this.m_pTheme = this.m_pMgr.getTheme(this.getFrameName())
-    if (this.m_pTheme === null) {
-      return false
-    }
-    return true
-  }
+//   Update() {
+//     this.m_pMgr = ChartManager.instance
+//     let areaName = this.getAreaName()
+//     this.m_pArea = this.m_pMgr.getArea(areaName)
+//     if (this.m_pArea === null) return false
+//     let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
+//     this.m_pRange = this.m_pMgr.getRange(rangeName)
+//     if (this.m_pRange === null || this.m_pRange.getRange() === 0.0) return false
+//     this.m_pTheme = this.m_pMgr.getTheme(this.getFrameName())
+//     if (this.m_pTheme === null) {
+//       return false
+//     }
+//     return true
+//   }
 
-  DrawGradations(context) {
-    let mgr = ChartManager.instance
-    let areaName = this.getAreaName()
-    let area = mgr.getArea(areaName)
-    let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
-    let range = mgr.getRange(rangeName)
-    if (range.getRange() === 0.0) return
-    let gradations = range.getGradations()
-    if (gradations.length === 0) return
-    let left = area.getLeft()
-    let right = area.getRight()
-    let gridRects = []
-    for (let n in gradations) {
-      let y = range.toY(gradations[n])
-      gridRects.push({ x: left, y: y, w: 6, h: 1 })
-      gridRects.push({ x: right - 6, y: y, w: 6, h: 1 })
-    }
-    if (gridRects.length > 0) {
-      let theme = mgr.getTheme(this.getFrameName())
-      context.fillStyle = theme.getColor(themes.Theme.Color.Grid1)
-      Plotter.createRectangles(context, gridRects)
-      context.fill()
-    }
-  }
+//   DrawGradations(context) {
+//     let mgr = ChartManager.instance
+//     let areaName = this.getAreaName()
+//     let area = mgr.getArea(areaName)
+//     let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
+//     let range = mgr.getRange(rangeName)
+//     if (range.getRange() === 0.0) return
+//     let gradations = range.getGradations()
+//     if (gradations.length === 0) return
+//     let left = area.getLeft()
+//     let right = area.getRight()
+//     let gridRects = []
+//     for (let n in gradations) {
+//       let y = range.toY(gradations[n])
+//       gridRects.push({ x: left, y: y, w: 6, h: 1 })
+//       gridRects.push({ x: right - 6, y: y, w: 6, h: 1 })
+//     }
+//     if (gridRects.length > 0) {
+//       let theme = mgr.getTheme(this.getFrameName())
+//       context.fillStyle = theme.getColor(themes.Theme.Color.Grid1)
+//       Plotter.createRectangles(context, gridRects)
+//       context.fill()
+//     }
+//   }
 
-  FillBlack(context) {
-    let ask_point = this.m_ask_points
-    let bid_point = this.m_bid_points
-    let ask_first_add = {}
-    let ask_last_add = {}
-    ask_first_add.x = this.m_right
-    ask_first_add.y = ask_point[0].y
-    ask_last_add.x = this.m_right
-    ask_last_add.y = ask_point[ask_point.length - 1].y
-    let bid_first_add = {}
-    let bid_last_add = {}
-    bid_first_add.x = this.m_right
-    bid_first_add.y = bid_point[0].y - 1
-    bid_last_add.x = this.m_right
-    bid_last_add.y = bid_point[bid_point.length - 1].y
-    ask_point.unshift(ask_first_add)
-    ask_point.push(ask_last_add)
-    bid_point.unshift(bid_first_add)
-    bid_point.push(bid_last_add)
-    context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Background)
-    context.beginPath()
-    context.moveTo(
-      Math.floor(ask_point[0].x) + 0.5,
-      Math.floor(ask_point[0].y) + 0.5
-    )
-    for (let i = 1; i < ask_point.length; i++) {
-      context.lineTo(
-        Math.floor(ask_point[i].x) + 0.5,
-        Math.floor(ask_point[i].y) + 0.5
-      )
-    }
-    context.fill()
-    context.beginPath()
-    context.moveTo(
-      Math.floor(bid_point[0].x) + 0.5,
-      Math.floor(bid_point[0].y) + 0.5
-    )
-    for (let i = 1; i < bid_point.length; i++) {
-      context.lineTo(
-        Math.floor(bid_point[i].x) + 0.5,
-        Math.floor(bid_point[i].y) + 0.5
-      )
-    }
-    context.fill()
-    ask_point.shift()
-    ask_point.pop()
-    bid_point.shift()
-    bid_point.pop()
-  }
+//   FillBlack(context) {
+//     let ask_point = this.m_ask_points
+//     let bid_point = this.m_bid_points
+//     let ask_first_add = {}
+//     let ask_last_add = {}
+//     ask_first_add.x = this.m_right
+//     ask_first_add.y = ask_point[0].y
+//     ask_last_add.x = this.m_right
+//     ask_last_add.y = ask_point[ask_point.length - 1].y
+//     let bid_first_add = {}
+//     let bid_last_add = {}
+//     bid_first_add.x = this.m_right
+//     bid_first_add.y = bid_point[0].y - 1
+//     bid_last_add.x = this.m_right
+//     bid_last_add.y = bid_point[bid_point.length - 1].y
+//     ask_point.unshift(ask_first_add)
+//     ask_point.push(ask_last_add)
+//     bid_point.unshift(bid_first_add)
+//     bid_point.push(bid_last_add)
+//     context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Background)
+//     context.beginPath()
+//     context.moveTo(
+//       Math.floor(ask_point[0].x) + 0.5,
+//       Math.floor(ask_point[0].y) + 0.5
+//     )
+//     for (let i = 1; i < ask_point.length; i++) {
+//       context.lineTo(
+//         Math.floor(ask_point[i].x) + 0.5,
+//         Math.floor(ask_point[i].y) + 0.5
+//       )
+//     }
+//     context.fill()
+//     context.beginPath()
+//     context.moveTo(
+//       Math.floor(bid_point[0].x) + 0.5,
+//       Math.floor(bid_point[0].y) + 0.5
+//     )
+//     for (let i = 1; i < bid_point.length; i++) {
+//       context.lineTo(
+//         Math.floor(bid_point[i].x) + 0.5,
+//         Math.floor(bid_point[i].y) + 0.5
+//       )
+//     }
+//     context.fill()
+//     ask_point.shift()
+//     ask_point.pop()
+//     bid_point.shift()
+//     bid_point.pop()
+//   }
 
-  DrawTickerGraph(context) {
-    // return;
-    let mgr = ChartManager.instance
-    let ds = mgr.getDataSource(this.getDataSourceName())
-    let ticker = ds._dataItems[ds._dataItems.length - 1].close
-    let p1x = this.m_left + 1
-    let p1y = this.m_pRange.toY(ticker)
-    let p2x = p1x + 5
-    let p2y = p1y + 2.5
-    let p3x = p1x + 5
-    let p3y = p1y - 2.5
-    context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Mark)
-    context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Mark)
-  }
-}
+//   DrawTickerGraph(context) {
+//     // return;
+//     let mgr = ChartManager.instance
+//     let ds = mgr.getDataSource(this.getDataSourceName())
+//     let ticker = ds._dataItems[ds._dataItems.length - 1].close
+//     let p1x = this.m_left + 1
+//     let p1y = this.m_pRange.toY(ticker)
+//     let p2x = p1x + 5
+//     let p2y = p1y + 2.5
+//     let p3x = p1x + 5
+//     let p3y = p1y - 2.5
+//     context.fillStyle = this.m_pTheme.getColor(themes.Theme.Color.Mark)
+//     context.strokeStyle = this.m_pTheme.getColor(themes.Theme.Color.Mark)
+//   }
+// }
 
+// 在 成交量 range 区绘制高亮成交量
 export class LastVolumePlotter extends Plotter {
   constructor(name) {
     super(name)
@@ -2237,7 +2197,7 @@ export class LastVolumePlotter extends Plotter {
 
   Draw(context) {
     let mgr = ChartManager.instance
-    let timeline = mgr.getTimeline(this.getDataSourceName())
+    //let timeline = mgr.getTimeline(this.getDataSourceName())
     let areaName = this.getAreaName()
     let area = mgr.getArea(areaName)
     let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
@@ -2251,6 +2211,8 @@ export class LastVolumePlotter extends Plotter {
     context.textBaseline = 'middle'
     context.fillStyle = theme.getColor(themes.Theme.Color.RangeMark)
     context.strokeStyle = theme.getColor(themes.Theme.Color.RangeMark)
+
+    // 获取最后一根的成交量
     let v = ds.getDataAt(ds.getDataCount() - 1).volume
     let y = range.toY(v)
     let left = area.getLeft() + 1
@@ -2268,7 +2230,7 @@ export class LastClosePlotter extends Plotter {
 
   Draw(context) {
     let mgr = ChartManager.instance
-    let timeline = mgr.getTimeline(this.getDataSourceName())
+    //let timeline = mgr.getTimeline(this.getDataSourceName())
     let areaName = this.getAreaName()
     let area = mgr.getArea(areaName)
     let rangeName = areaName.substring(0, areaName.lastIndexOf('Range'))
@@ -2276,6 +2238,8 @@ export class LastClosePlotter extends Plotter {
     if (range.getRange() === 0.0) return
     let ds = mgr.getDataSource(this.getDataSourceName())
     if (ds.getDataCount() < 1) return
+
+    // 获取最后一根的收盘价
     let v = ds._dataItems[ds._dataItems.length - 1].close
     if (v <= range.getMinValue() || v >= range.getMaxValue()) return
     let theme = mgr.getTheme(this.getFrameName())

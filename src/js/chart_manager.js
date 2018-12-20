@@ -565,7 +565,9 @@ export class ChartManager {
     }
   }
 
+  // 更新数据
   updateData(dsName, data) {
+    console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
     let ds = this.getDataSource(dsName)
     if (ds === undefined || ds === null) {
       return
@@ -1092,6 +1094,7 @@ export class ChartManager {
     range.setPaddingBottom(4)
     range.setMinInterval(20)
     if (Util.isInstance(indic, indicators.VOLUMEIndicator)) {
+      // 在 成交量 range 区绘制高亮成交量
       let plotter = new plotters.LastVolumePlotter(
         areaName + 'Range.decoration'
       )

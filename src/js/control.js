@@ -13,16 +13,31 @@ export class Control {
 
   static requestHighStockData() {
     Kline.instance.data.lines = Kline.instance.highStockData.data
-
+    console.log('00000000000000000000000000000000000000000')
     console.log(Kline.instance.data)
     Kline.instance.chartMgr.updateData('frame0.k0', Kline.instance.data.lines)
     ChartManager.instance.redraw('All', false)
+  }
+
+  static updateData(data) {
+    console.log(data)
+
+    //return
+    Kline.instance.chartMgr.updateData('frame0.k0', data)
+    ChartManager.instance.redraw('All', true)
   }
 
   static readCookie() {
     ChartSettings.get()
     ChartSettings.save()
     let tmp = ChartSettings.get()
+    // console.log('settings~~~~~~~~~~')
+    // console.log(JSON.stringify(tmp))
+
+    // let tmp = JSON.parse(
+    //   '{"ver":3,"charts":{"chartStyle":"CandleStick","mIndic":"MA","indics":["VOLUME","ROVER"],"indicsStatus":"open","period":"1d","period_weight":{"60000":8,"300000":8,"900000":8,"1800000":8,"3600000":8,"86400000":8,"604800000":8,"line":8,"1min":7,"5min":6,"15min":5,"30min":4,"1hour":3,"1day":2,"1week":1,"3min":0,"2hour":0,"4hour":0,"6hour":0,"12hour":0,"3day":0},"areaHeight":[291,135,149],"symbol":"BTC"},"indics":{"MA":[7,30,0,0,0,0],"EMA":[7,30,0,0,0,0],"VOLUME":[5,10],"MACD":[12,26,9],"KDJ":[9,3,3],"StochRSI":[14,14,3,3],"RSI":[6,12,24],"DMI":[14,6],"OBV":[30],"BOLL":[20],"DMA":[10,50,10],"TRIX":[12,9],"BRAR":[26],"VR":[26,6],"EMV":[14,9],"WR":[10,6],"ROC":[12,6],"MTM":[12,6],"PSY":[12,6]},"theme":"Dark","language":"zh-cn"}'
+    // )
+
     ChartManager.instance.setChartStyle('frame0.k0', tmp.charts.chartStyle)
     let symbol = tmp.charts.symbol
     if (!Kline.instance.init) {

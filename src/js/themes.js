@@ -64,8 +64,8 @@ export class DarkTheme extends Theme {
       this._colors[Theme.Color.PositiveDark] = '#3b0e08';
       this._colors[Theme.Color.NegativeDark] = '#004718';
     } else {
-      this._colors[Theme.Color.Positive] = '#19b34c';
-      this._colors[Theme.Color.Negative] = '#990e0e';
+      this._colors[Theme.Color.Positive] = '#FF4040';
+      this._colors[Theme.Color.Negative] = '#00FFFF';
       this._colors[Theme.Color.PositiveDark] = '#004718';
       this._colors[Theme.Color.NegativeDark] = '#3b0e08';
     }

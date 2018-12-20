@@ -1189,6 +1189,6 @@ export class ROVERIndicator extends Indicator {
 
   // 输出指标名称
   getName() {
-    return 'ROVER111'
+    return '回测指标'
   }
 }

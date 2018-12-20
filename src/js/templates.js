@@ -87,8 +87,8 @@ export class Template {
     )
     mgr.setPlotter(plotter.getName(), plotter)
 
-    plotter = new plotters.COrderGraphPlotter(areaName + 'Range.grid')
-    mgr.setPlotter(plotter.getName(), plotter)
+    // plotter = new plotters.COrderGraphPlotter(areaName + 'Range.grid')
+    // mgr.setPlotter(plotter.getName(), plotter)
 
     plotter = new plotters.RangePlotter(areaName + 'Range.main')
     mgr.setPlotter(plotter.getName(), plotter)
@@ -208,6 +208,7 @@ export class Template {
 }
 
 export class DefaultTemplate extends Template {
+
   static loadTemplate(dsName, dsAlias) {
     let mgr = ChartManager.instance
     let settings = ChartSettings.get()
@@ -219,6 +220,7 @@ export class DefaultTemplate extends Template {
     let frame = new layouts.DockableLayout(frameName)
     mgr.setFrame(frame.getName(), frame)
     mgr.setArea(frame.getName(), frame)
+    
     frame.setGridColor(themes.Theme.Color.Grid1)
 
     let area = new areas.TimelineArea(dsName + '.timeline')
