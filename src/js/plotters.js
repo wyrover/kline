@@ -1509,6 +1509,59 @@ export class IndicatorInfoPlotter extends Plotter {
   }
 }
 
+// 绘制指标信息2
+export class CustomIndicatorInfoPlotter extends Plotter {
+  constructor(name) {
+    super(name)
+  }
+
+  Draw(ctx) {
+    if (this.getAreaName() == 'frame0.k0.indic0') return
+    let mgr = ChartManager.instance
+    let area = mgr.getArea(this.getAreaName())
+    let timeline = mgr.getTimeline(this.getDataSourceName())
+    let dp = mgr.getDataProvider(this.getAreaName() + '.secondary')
+
+    let ds = mgr.getDataSource(this.getDataSourceName())
+    if (ds.getDataCount() < 1) {
+      return
+    }
+
+    let theme = mgr.getTheme(this.getFrameName())
+    ctx.font = theme.getFont(themes.Theme.Font.Default)
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'top'
+    ctx.fillStyle = theme.getColor(themes.Theme.Color.Text4)
+    let rect = {
+      x: area.getLeft() + 4,
+      y: area.getTop() + 20,
+      w: 300,
+      h: 60
+    }
+
+    let selIndex = timeline.getSelectedIndex()
+    if (selIndex < 0) return
+
+    let current_data = ds.getDataAt(selIndex)
+
+    for (const signal of mgr.highStockData.signals) {
+      if (signal.x == current_data.date) {
+        ctx.beginPath()
+        ctx.rect(rect.x, rect.y, rect.w, rect.h)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
+        ctx.fill()
+
+        ctx.fillStyle = 'rgba(255, 255, 255)'
+        ctx.fillText(signal.text, rect.x, rect.y)
+        // context.lineWidth = 1
+        // context.strokeStyle = 'black'
+        // context.stroke()
+        break
+      }
+    }
+  }
+}
+
 // 绘制可视区最高最低价
 export class MinMaxPlotter extends NamedObject {
   constructor(name) {

@@ -275,6 +275,8 @@ export default class Kline {
 
       Kline.instance.setShowTrade(false)
 
+      $('#backtest_title').html(Kline.instance.highStockData.title)
+
       //$('.trade_container').hide()
       //$('#chart_toolbar').hide()
 
@@ -512,6 +514,34 @@ export default class Kline {
         if (e.keyCode === 46) {
           ChartManager.instance.deleteToolObject()
           ChartManager.instance.redraw('OverlayCanvas', false)
+        }
+      })
+
+      $(document).keydown(function(e) {
+        switch (e.keyCode) {
+          case 38: // 上
+            console.log('上')
+            ChartManager.instance.scale(1)
+            ChartManager.instance.redraw('All', true)
+            break
+          case 40: // 下
+            console.log('下')
+            ChartManager.instance.scale(-1)
+            ChartManager.instance.redraw('All', true)
+            break
+          case 37:
+            console.log('左')
+            console.log(ChartManager.instance.getTimeline('frame0.k0'))
+            ChartManager.instance.getTimeline('frame0.k0').startMove()
+            ChartManager.instance.getTimeline('frame0.k0').move(50)
+            ChartManager.instance.redraw('All', true)
+            break
+          case 39:
+            console.log('右')
+            ChartManager.instance.getTimeline('frame0.k0').startMove()
+            ChartManager.instance.getTimeline('frame0.k0').move(-10)
+            ChartManager.instance.redraw('All', true)
+            break
         }
       })
 

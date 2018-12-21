@@ -15,7 +15,11 @@ export class Control {
     Kline.instance.data.lines = Kline.instance.highStockData.data
     console.log('00000000000000000000000000000000000000000')
     console.log(Kline.instance.data)
-    Kline.instance.chartMgr.updateData('frame0.k0', Kline.instance.data.lines)
+    Kline.instance.chartMgr.resetDataSource()
+    Kline.instance.chartMgr.updateData(
+      'frame0.k0',
+      Kline.instance.highStockData.data
+    )
     ChartManager.instance.redraw('All', false)
   }
 
@@ -29,6 +33,15 @@ export class Control {
 
   static readCookie() {
     ChartSettings.get()
+
+    if (Kline.instance.highStockData.other_lines.length === 0) {
+      ChartSettings.get().charts.indics[1] = 'MACD'
+    } else {
+      ChartSettings.get().charts.indics[1] = 'BackTest'
+    }
+    console.log('333333333333333333333333333333')
+    console.log(ChartSettings.get())
+
     ChartSettings.save()
     let tmp = ChartSettings.get()
     // console.log('settings~~~~~~~~~~')
@@ -499,8 +512,6 @@ export class Control {
   // static subscribeCallback(res) {
   //   Control.requestSuccessHandler(JSON.parse(res.body))
   // }
-
-  static handleHighStockDataCallback(res) {}
 
   // static socketConnect() {
   //   if (!Kline.instance.stompClient || !Kline.instance.socketConnected) {

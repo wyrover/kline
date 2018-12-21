@@ -1,8 +1,31 @@
 import { Control } from './control'
-import { Template } from './templates'
 
 export default class HighStockData {
   constructor(highchart_option) {
+    this.load(highchart_option)
+  }
+
+  get data() {
+    return this._data
+  }
+
+  get main_lines() {
+    return this._main_lines
+  }
+
+  get other_lines() {
+    return this._other_lines
+  }
+
+  get signals() {
+    return this._signals
+  }
+
+  get title() {
+    return this._title
+  }
+
+  load(highchart_option) {
     this.highchart_option = highchart_option
 
     console.log(this.highchart_option)
@@ -13,11 +36,13 @@ export default class HighStockData {
     this._main_lines = []
     this._other_lines = []
     this._orders = []
+    this._title = ''
 
     for (const series of this.highchart_option.series) {
       console.log(series)
 
       if (series.type == 'candlestick') {
+        this._title = series.name
         for (let i = 0; i < series.data.length; ++i) {
           let data_item = []
           if (series.data[i].x !== undefined) {
@@ -82,20 +107,8 @@ export default class HighStockData {
     console.log(this._data)
   }
 
-  get data() {
-    return this._data
-  }
-
-  get main_lines() {
-    return this._main_lines
-  }
-
-  get other_lines() {
-    return this._other_lines
-  }
-
-  get signals() {
-    return this._signals
+  reset(highchart_option) {
+    this.load(highchart_option)
   }
 
   indexOfDate(date) {

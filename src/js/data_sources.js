@@ -44,6 +44,13 @@ export class MainDataSource extends DataSource {
     this.toolManager = new CToolManager(name)
   }
 
+  clear() {
+    this._erasedCount = 0
+    this._dataItems = []
+    this._decimalDigits = 0
+    this.toolManager = new CToolManager(name)
+  }
+
   getCacheSize() {
     return this._dataItems.length
   }

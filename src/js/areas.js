@@ -210,12 +210,17 @@ export class MainArea extends ChartArea {
       if (this._dragStarted === false)
         if (Math.abs(this._oldX - x) > 1 || Math.abs(this._oldY - y) > 1)
           this._dragStarted = true
+
     if (this._dragStarted) {
       mgr.hideCursor()
       if (mgr.onToolMouseDrag(this.getFrameName(), x, y)) return this
+      console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
+      console.log(this.getDataSourceName())
+      console.log(x - this._oldX)
       mgr.getTimeline(this.getDataSourceName()).move(x - this._oldX)
       return this
     }
+
     if (
       this._passMoveEventToToolManager &&
       mgr.onToolMouseMove(this.getFrameName(), x, y)
@@ -223,6 +228,7 @@ export class MainArea extends ChartArea {
       mgr.hideCursor()
       return this
     }
+
     switch (mgr._drawingTool) {
       case ChartManager.DrawingTool.Cursor:
         mgr.showCursor()
@@ -235,6 +241,7 @@ export class MainArea extends ChartArea {
         mgr.hideCursor()
         break
     }
+
     return this
   }
 

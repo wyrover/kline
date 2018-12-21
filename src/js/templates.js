@@ -148,6 +148,11 @@ export class Template {
     plotter = new plotters.IndicatorInfoPlotter(areaName + '.info')
     mgr.setPlotter(plotter.getName(), plotter)
 
+    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+    console.log(areaName + '.info')
+    plotter = new plotters.CustomIndicatorInfoPlotter(areaName + '.custom_info')
+    mgr.setPlotter(plotter.getName(), plotter)
+
     // 绘制副图光标十字线
     plotter = new plotters.SelectionPlotter(areaName + '.selection')
     mgr.setPlotter(plotter.getName(), plotter)
@@ -208,7 +213,6 @@ export class Template {
 }
 
 export class DefaultTemplate extends Template {
-
   static loadTemplate(dsName, dsAlias) {
     let mgr = ChartManager.instance
     let settings = ChartSettings.get()
@@ -220,7 +224,7 @@ export class DefaultTemplate extends Template {
     let frame = new layouts.DockableLayout(frameName)
     mgr.setFrame(frame.getName(), frame)
     mgr.setArea(frame.getName(), frame)
-    
+
     frame.setGridColor(themes.Theme.Color.Grid1)
 
     let area = new areas.TimelineArea(dsName + '.timeline')

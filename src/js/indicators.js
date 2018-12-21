@@ -164,46 +164,11 @@ export class MAIndicator extends Indicator {
     this.addParameter(M4)
     this.addParameter(M5)
     this.addParameter(M6)
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M1)
-    //   )
-    // )
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M2)
-    //   )
-    // )
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M3)
-    //   )
-    // )
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M4)
-    //   )
-    // )
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M5)
-    //   )
-    // )
-    // this.addOutput(
-    //   new exprs.RangeOutputExpr(
-    //     'MA',
-    //     new exprs.MaExpr(new exprs.CloseExpr(), M6)
-    //   )
-    // )
 
-    // let PSY = new exprs.OutputExpr('收盘价线', new exprs.CloseExpr('PSY'))
-    // this.addOutput(PSY)
-    if (this._highStockData !== undefined) {
+    if (
+      this._highStockData !== undefined &&
+      this._highStockData.main_lines.length > 0
+    ) {
       for (const line of this._highStockData.main_lines) {
         let tmpline = new exprs.OutputExpr(
           line.name,
@@ -211,6 +176,43 @@ export class MAIndicator extends Indicator {
         )
         this.addOutput(tmpline)
       }
+    } else {
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M1)
+        )
+      )
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M2)
+        )
+      )
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M3)
+        )
+      )
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M4)
+        )
+      )
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M5)
+        )
+      )
+      this.addOutput(
+        new exprs.RangeOutputExpr(
+          'MA',
+          new exprs.MaExpr(new exprs.CloseExpr(), M6)
+        )
+      )
     }
   }
 
@@ -1166,7 +1168,7 @@ export class STOCHRSIIndicator extends Indicator {
   }
 }
 
-export class ROVERIndicator extends Indicator {
+export class BackTestIndicator extends Indicator {
   constructor(highStockData) {
     super()
     this._highStockData = highStockData

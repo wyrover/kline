@@ -82,6 +82,10 @@ export class ChartManager {
     console.log(this)
   }
 
+  resetDataSource() {
+    this._dataSources['frame0.k0'].clear()
+  }
+
   redraw(layer, refresh) {
     if (layer === undefined || refresh) {
       layer = 'All'
@@ -363,14 +367,14 @@ export class ChartManager {
   }
 
   setCurrentDataSource(dsName, dsAlias) {
-    let cached = this.getCachedDataSource(dsAlias)
-    if (cached !== undefined && cached !== null) {
-      this.setDataSource(dsName, cached, true)
-    } else {
-      cached = new data_sources.MainDataSource(dsAlias)
-      this.setDataSource(dsName, cached, true)
-      this.setCachedDataSource(dsAlias, cached)
-    }
+    // let cached = this.getCachedDataSource(dsAlias)
+    // if (cached !== undefined && cached !== null) {
+    //   this.setDataSource(dsName, cached, true)
+    // } else {
+    let cached = new data_sources.MainDataSource(dsAlias)
+    this.setDataSource(dsName, cached, true)
+    this.setCachedDataSource(dsAlias, cached)
+    //}
   }
 
   getDataSource(name) {
@@ -517,7 +521,14 @@ export class ChartManager {
     let ds = this._dataSources[area.getDataSourceName()]
     let plotterNames
     if (ds.getDataCount() < 1) plotterNames = ['.selection']
-    else plotterNames = ['.decoration', '.selection', '.info', '.tool']
+    else
+      plotterNames = [
+        '.decoration',
+        '.selection',
+        '.info',
+        '.tool',
+        '.custom_info'
+      ]
     this.drawArea(context, area, plotterNames)
   }
 
@@ -701,7 +712,7 @@ export class ChartManager {
     if (e !== undefined) {
       e.selectAt(y)
       e = this.getTimeline(area.getDataSourceName())
-      if (e !== undefined) if (e.selectAt(x)) return true
+      if (e !== undefined && e.selectAt(x)) return true
     }
     return false
   }
@@ -795,6 +806,7 @@ export class ChartManager {
       this._capturingMouseArea.onMouseMove(x, y)
       return
     }
+
     let _areas = frame.contains(x, y)
     if (_areas === null) return
     let a,
@@ -1005,8 +1017,8 @@ export class ChartManager {
         indic = new indicators.STOCHRSIIndicator()
         range = new ranges.PercentageRange(areaName)
         break
-      case 'ROVER':
-        indic = new indicators.ROVERIndicator(this._highStockData)
+      case 'BackTest':
+        indic = new indicators.BackTestIndicator(this._highStockData)
         range = new ranges.Range(areaName)
         break
       default:
