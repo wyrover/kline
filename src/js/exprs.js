@@ -89,12 +89,11 @@ export class CustomExpr extends Expr {
   constructor(line) {
     super()
     this._line = line
-    console.log('222222222222222222')
-    console.log(this._line)
   }
   execute(index) {
     //console.log(index)
-    return this._line[index]
+    if (this._line[index] !== undefined) return this._line[index]
+    return NaN
   }
 }
 

@@ -54,11 +54,10 @@ export default {
     }),
     commonjs(),
     production && uglify(),
-    production && serve('dist'),
-    production &&
-      livereload({
-        watch: 'dist',
-        port: 3320
-      })
+    serve('dist'),
+    livereload({
+      watch: 'dist',
+      port: 3320
+    })
   ]
 }

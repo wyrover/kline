@@ -1,10 +1,10 @@
 import Kline from './kline'
-import { KlineTrade } from './kline_trade'
+//import { KlineTrade } from './kline_trade'
 import { ChartManager } from './chart_manager'
 import { ChartSettings } from './chart_settings'
 import { DefaultTemplate, Template } from './templates'
 import { MEvent } from './mevent'
-import $ from 'jquery'
+//import $ from 'jquery'
 
 export class Control {
   static requestData(showLoading) {
@@ -12,20 +12,17 @@ export class Control {
   }
 
   static requestHighStockData() {
-    Kline.instance.data.lines = Kline.instance.highStockData.data
-    console.log('00000000000000000000000000000000000000000')
-    console.log(Kline.instance.data)
+    //Kline.instance.data.lines = Kline.instance.highStockData.ohlc_series.data
+
     Kline.instance.chartMgr.resetDataSource()
     Kline.instance.chartMgr.updateData(
       'frame0.k0',
-      Kline.instance.highStockData.data
+      Kline.instance.highStockData.ohlc_series.data
     )
     ChartManager.instance.redraw('All', false)
   }
 
   static updateData(data) {
-    console.log(data)
-
     //return
     Kline.instance.chartMgr.updateData('frame0.k0', data)
     ChartManager.instance.redraw('All', true)
@@ -34,13 +31,19 @@ export class Control {
   static readCookie() {
     ChartSettings.get()
 
-    if (Kline.instance.highStockData.other_lines.length === 0) {
+    let flag = false
+    for (const line of Kline.instance.highStockData.series) {
+      if (line.type == 'other') {
+        flag = true
+        break
+      }
+    }
+
+    if (!flag) {
       ChartSettings.get().charts.indics[1] = 'MACD'
     } else {
       ChartSettings.get().charts.indics[1] = 'BackTest'
     }
-    console.log('333333333333333333333333333333')
-    console.log(ChartSettings.get())
 
     ChartSettings.save()
     let tmp = ChartSettings.get()

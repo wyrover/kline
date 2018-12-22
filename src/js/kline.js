@@ -23,7 +23,6 @@ export default class Kline {
     this.buttonDown = false
     this.init = false
     this.requestParam = ''
-    this.data = {}
     this.width = 1200
     this.height = 650
     this.symbol = ''
@@ -231,33 +230,31 @@ export default class Kline {
 
   onResize(width, height) {
     if (this.debug) {
-      console.log(
-        'DEBUG: chart resized to width: ' + width + ' height: ' + height
-      )
+      //console.log('DEBUG: chart resized to width: ' + width + ' height: ' + height)
     }
   }
 
   onLangChange(lang) {
     if (this.debug) {
-      console.log('DEBUG: language changed to ' + lang)
+      //console.log('DEBUG: language changed to ' + lang)
     }
   }
 
   onSymbolChange(symbol, symbolName) {
     if (this.debug) {
-      console.log('DEBUG: symbol changed to ' + symbol + ' ' + symbolName)
+      //console.log('DEBUG: symbol changed to ' + symbol + ' ' + symbolName)
     }
   }
 
   onThemeChange(theme) {
     if (this.debug) {
-      console.log('DEBUG: themes changed to : ' + theme)
+      //console.log('DEBUG: themes changed to : ' + theme)
     }
   }
 
   onRangeChange(range) {
     if (this.debug) {
-      console.log('DEBUG: range changed to ' + range)
+      //console.log('DEBUG: range changed to ' + range)
     }
   }
 
@@ -520,26 +517,21 @@ export default class Kline {
       $(document).keydown(function(e) {
         switch (e.keyCode) {
           case 38: // 上
-            console.log('上')
             ChartManager.instance.scale(1)
             ChartManager.instance.redraw('All', true)
             break
           case 40: // 下
-            console.log('下')
             ChartManager.instance.scale(-1)
             ChartManager.instance.redraw('All', true)
             break
           case 37:
-            console.log('左')
-            console.log(ChartManager.instance.getTimeline('frame0.k0'))
             ChartManager.instance.getTimeline('frame0.k0').startMove()
-            ChartManager.instance.getTimeline('frame0.k0').move(50)
+            ChartManager.instance.getTimeline('frame0.k0').move(40)
             ChartManager.instance.redraw('All', true)
             break
           case 39:
-            console.log('右')
             ChartManager.instance.getTimeline('frame0.k0').startMove()
-            ChartManager.instance.getTimeline('frame0.k0').move(-10)
+            ChartManager.instance.getTimeline('frame0.k0').move(-1)
             ChartManager.instance.redraw('All', true)
             break
         }
@@ -643,6 +635,7 @@ export default class Kline {
         //   mgr.redraw('All', false)
         // }
       })
+
       $('#chart_parameter_settings button').click(function() {
         // let name = $(this)
         //   .parents('tr')

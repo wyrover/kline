@@ -148,8 +148,7 @@ export class Template {
     plotter = new plotters.IndicatorInfoPlotter(areaName + '.info')
     mgr.setPlotter(plotter.getName(), plotter)
 
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-    console.log(areaName + '.info')
+    
     plotter = new plotters.CustomIndicatorInfoPlotter(areaName + '.custom_info')
     mgr.setPlotter(plotter.getName(), plotter)
 

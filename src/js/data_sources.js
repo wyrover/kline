@@ -120,7 +120,7 @@ export class MainDataSource extends DataSource {
       for (i = 0; i < cnt; i++) {
         e = data[i]
 
-        console.log(e[0])
+       
         let index = this.indeOfDate(e[0])
         if (index !== -1) {
           this.setUpdateMode(DataSource.UpdateMode.Update)

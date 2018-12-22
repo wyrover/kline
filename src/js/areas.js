@@ -214,9 +214,7 @@ export class MainArea extends ChartArea {
     if (this._dragStarted) {
       mgr.hideCursor()
       if (mgr.onToolMouseDrag(this.getFrameName(), x, y)) return this
-      console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
-      console.log(this.getDataSourceName())
-      console.log(x - this._oldX)
+      
       mgr.getTimeline(this.getDataSourceName()).move(x - this._oldX)
       return this
     }

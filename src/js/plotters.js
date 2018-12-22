@@ -513,14 +513,6 @@ export class TimelineAreaBackgroundPlotter extends BackgroundPlotter {
     let theme = mgr.getTheme(this.getFrameName())
     context.fillStyle = theme.getColor(this._color)
 
-    console.log('时间线矩形区:')
-    console.log({
-      x: area.getLeft(),
-      y: area.getTop(),
-      w: area.getWidth(),
-      h: area.getHeight()
-    })
-
     context.fillRect(
       area.getLeft(),
       area.getTop(),
@@ -599,7 +591,6 @@ export class CandlestickPlotter extends NamedObject {
 
   Draw(ctx) {
     let mgr = ChartManager.instance
-    console.log('iiiiiiiiiiiiiiiiiiiiiiiii')
 
     let ds = mgr.getDataSource(this.getDataSourceName())
     if (ds.getDataCount() < 1) {
@@ -613,13 +604,6 @@ export class CandlestickPlotter extends NamedObject {
     if (range.getRange() === 0.0) {
       return
     }
-
-    console.log('DataSource Name: ' + this.getDataSourceName())
-    console.log(ds)
-    console.log('AreaName: ' + this.getAreaName())
-    console.log(area)
-    console.log(timeline)
-    console.log(range)
 
     let theme = mgr.getTheme(this.getFrameName())
     let dark = Util.isInstance(theme, themes.DarkTheme)
@@ -635,21 +619,14 @@ export class CandlestickPlotter extends NamedObject {
     let left = timeline.toItemLeft(start)
     let center = timeline.toItemCenter(start)
 
-    console.log({
-      time_line_cW: cW,
-      time_line_iW: iW,
-      time_line_left: left,
-      time_line_center: center
-    })
-
     let strokePosRects = []
     let fillPosRects = []
     let fillUchRects = []
     let fillNegRects = []
 
     // 只绘制可视区
-    console.log('K 线第一根:' + first)
-    console.log('K 线最后一根:' + last)
+    //console.log('K 线第一根:' + first)
+    //console.log('K 线最后一根:' + last)
 
     //console.log(mgr.highStockData.orders)
 
@@ -720,7 +697,7 @@ export class CandlestickPlotter extends NamedObject {
           fillNegRects.push({ x: center, y: high, w: 1, h: low - high })
       }
 
-      for (const signal of mgr.highStockData.signals) {
+      for (const signal of mgr.highStockData.signals_series.data) {
         if (signal.x == data.date) {
           if (signal.title == 'BK') {
             Plotter.drawBKFlag(ctx, { x: center, y: low })
@@ -1544,7 +1521,7 @@ export class CustomIndicatorInfoPlotter extends Plotter {
 
     let current_data = ds.getDataAt(selIndex)
 
-    for (const signal of mgr.highStockData.signals) {
+    for (const signal of mgr.highStockData.signals_series.data) {
       if (signal.x == current_data.date) {
         ctx.beginPath()
         ctx.rect(rect.x, rect.y, rect.w, rect.h)

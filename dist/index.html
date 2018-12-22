@@ -25,7 +25,8 @@
 
       <hr />
 
-      <button id="btnUpdate">update</button>
+      <button id="btnUpdate2">update2</button>
+      <button id="btnUpdate3">update3</button>
       <button id="btnReset">reset</button>
     </div>
 
@@ -7536,18 +7537,6 @@
                 text: 'SK Lot: 8',
                 title: 'SK',
                 x: 1540915200000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 8',
-                title: 'SK',
-                x: 1541001600000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 9',
-                title: 'SK',
-                x: 1542729600000
               }
             ]
           }
@@ -7586,9 +7575,7 @@
         debug: true,
         showTrade: true,
         highStockData: highStockData,
-        onResize: function(width, height) {
-          console.log('chart resized: ' + width + ' ' + height)
-        }
+        onResize: function(width, height) {}
       })
 
       kline.draw()
@@ -7598,284 +7585,150 @@
         kline.draw()
       })
 
-      $('#btnUpdate').click(() => {
-        highStockData.update([
+      $('#btnUpdate2').click(() => {
+        // 更新 K 线
+        highStockData.update2(0, [
           {
-            type: 'candlestick',
-            name: 'Futures_CTP_MA888',
-            id: 'primary',
-            data: [
-              {
-                close: 2739,
-                high: 2748,
-                low: 2717,
-                open: 2735,
-                runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
-                x: 1542211200000
-              },
-              {
-                close: 2773,
-                high: 2792,
-                low: 2709,
-                open: 2744,
-                runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
-                x: 1542297600000
-              },
-              {
-                close: 2722,
-                high: 2789,
-                low: 2714,
-                open: 2787,
-                runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
-                x: 1542556800000
-              },
-              {
-                close: 2677,
-                high: 2732,
-                low: 2659,
-                open: 2726,
-                runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
-                x: 1542643200000
-              },
-              {
-                close: 2557,
-                high: 2677,
-                low: 2557,
-                open: 2674,
-                runtime: [['TC', 9, '..'], ['MTC', 36, '..']],
-                x: 1542729600000
-              }
-            ]
+            close: 2739,
+            high: 2748,
+            low: 2717,
+            open: 2735,
+            runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
+            x: 1542211200000
           },
           {
-            type: 'column',
-            name: 'Volume',
-            id: 'volume',
-            color: '#a6d3a6',
-            data: [
-              [1542211200000, 2916857],
-              [1542297600000, 3928141],
-              [1542556800000, 3024680],
-              [1542643200000, 3713294],
-              [1542729600000, 2440872]
-            ],
-            tooltip: {
-              valueDecimals: 8
-            },
-            showInLegend: false,
-            yAxis: 1
+            close: 2773,
+            high: 2792,
+            low: 2709,
+            open: 2744,
+            runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
+            x: 1542297600000
           },
           {
-            type: 'line',
-            lineWidth: 1,
-            name: 'HH',
-            linkedTo: 'primary',
-            showInLegend: true,
-            data: [
-              {
-                x: 1542211200000,
-                y: 3398
-              },
-              {
-                x: 1542297600000,
-                y: 3398
-              },
-              {
-                x: 1542556800000,
-                y: 3381
-              },
-              {
-                x: 1542643200000,
-                y: 3381
-              },
-              {
-                x: 1542729600000,
-                y: 3381
-              }
-            ],
-            tooltip: {
-              valueDecimals: 8
-            },
-            yAxis: 0
+            close: 2722,
+            high: 2789,
+            low: 2714,
+            open: 2787,
+            runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
+            x: 1542556800000
           },
           {
-            type: 'line',
-            lineWidth: 1,
-            name: 'LL',
-            linkedTo: 'primary',
-            showInLegend: true,
-            data: [
-              {
-                x: 1542211200000,
-                y: 2673
-              },
-              {
-                x: 1542297600000,
-                y: 2673
-              },
-              {
-                x: 1542556800000,
-                y: 2673
-              },
-              {
-                x: 1542643200000,
-                y: 2673
-              },
-              {
-                x: 1542729600000,
-                y: 2659
-              }
-            ],
-            tooltip: {
-              valueDecimals: 8
-            },
-            yAxis: 0
+            close: 2677,
+            high: 2732,
+            low: 2659,
+            open: 2726,
+            runtime: [['TC', 8, '..'], ['MTC', 32, '..']],
+            x: 1542643200000
           },
           {
-            type: 'line',
-            lineWidth: 1,
-            name: 'ATR',
-            linkedTo: 'primary',
-            showInLegend: true,
-            data: [
-              {
-                x: 1542211200000,
-                y: 83.1154
-              },
-              {
-                x: 1542297600000,
-                y: 82.9615
-              },
-              {
-                x: 1542556800000,
-                y: 81.0769
-              },
-              {
-                x: 1542643200000,
-                y: 81.2308
-              },
-              {
-                x: 1542729600000,
-                y: 80.8462
-              }
-            ],
-            tooltip: {
-              valueDecimals: 8
-            },
-            yAxis: 2
-          },
-          {
-            name: 'Signal',
-            type: 'flags',
-            shape: 'circlepin',
-            onSeries: 'primary',
-            data: [
-              {
-                color: 'black',
-                text: 'SK Lot: 11',
-                title: 'SK',
-                x: 1529942400000
-              },
-              {
-                color: 'red',
-                text: 'BP Lot: 11',
-                title: 'BP',
-                x: 1530115200000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 11',
-                title: 'BK',
-                x: 1530460800000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 11',
-                title: 'BK',
-                x: 1530633600000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 10',
-                title: 'BK',
-                x: 1530806400000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 11',
-                title: 'BK',
-                x: 1532275200000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 11',
-                title: 'BK',
-                x: 1532361600000
-              },
-              {
-                color: 'black',
-                text: 'SP Lot: 54',
-                title: 'SP',
-                x: 1535904000000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 8',
-                title: 'BK',
-                x: 1539014400000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 8',
-                title: 'BK',
-                x: 1539100800000
-              },
-              {
-                color: 'red',
-                text: 'BK Lot: 8',
-                title: 'BK',
-                x: 1539273600000
-              },
-              {
-                color: 'black',
-                text: 'SP Lot: 24',
-                title: 'SP',
-                x: 1539619200000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 8',
-                title: 'SK',
-                x: 1540742400000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 8',
-                title: 'SK',
-                x: 1540828800000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 8',
-                title: 'SK',
-                x: 1540915200000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 8',
-                title: 'SK',
-                x: 1541001600000
-              },
-              {
-                color: 'black',
-                text: 'SK Lot: 9',
-                title: 'SK',
-                x: 1542729600000
-              }
-            ]
+            close: 2557,
+            high: 2677,
+            low: 2557,
+            open: 2674,
+            runtime: [['TC', 9, '..'], ['MTC', 36, '..']],
+            x: 1542729600000
           }
         ])
-        console.log('1111111111111111')
+      })
+
+      $('#btnUpdate3').click(() => {
+        // 更新成交量, 也可传对象数组
+        highStockData.update2(1, [
+          [1542211200000, 2916857],
+          [1542297600000, 3928141],
+          [1542556800000, 3024680],
+          [1542643200000, 3713294],
+          [1542729600000, 2440872]
+        ])
+
+        // 更新 HH
+        highStockData.update2(2, [
+          {
+            x: 1542211200000,
+            y: 3398
+          },
+          {
+            x: 1542297600000,
+            y: 3398
+          },
+          {
+            x: 1542556800000,
+            y: 3381
+          },
+          {
+            x: 1542643200000,
+            y: 3381
+          },
+          {
+            x: 1542729600000,
+            y: 3381
+          }
+        ])
+
+        // 更新 LL
+        highStockData.update2(3, [
+          {
+            x: 1542211200000,
+            y: 2673
+          },
+          {
+            x: 1542297600000,
+            y: 2673
+          },
+          {
+            x: 1542556800000,
+            y: 2673
+          },
+          {
+            x: 1542643200000,
+            y: 2673
+          },
+          {
+            x: 1542729600000,
+            y: 2659
+          }
+        ])
+
+        // 更新 ATR
+        highStockData.update2(4, [
+          {
+            x: 1542211200000,
+            y: 83.1154
+          },
+          {
+            x: 1542297600000,
+            y: 82.9615
+          },
+          {
+            x: 1542556800000,
+            y: 81.0769
+          },
+          {
+            x: 1542643200000,
+            y: 81.2308
+          },
+          {
+            x: 1542729600000,
+            y: 80.8462
+          }
+        ])
+
+        // 更新信号
+
+        highStockData.update2(5, [
+          {
+            color: 'black',
+            text: 'SK Lot: 8',
+            title: 'SK',
+            x: 1541001600000
+          },
+          {
+            color: 'black',
+            text: 'SK Lot: 9',
+            title: 'SK',
+            x: 1542729600000
+          }
+        ])
       })
     </script>
   </body>

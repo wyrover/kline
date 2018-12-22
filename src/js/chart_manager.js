@@ -73,13 +73,7 @@ export class ChartManager {
   }
 
   printAllAreas() {
-    console.log('uuuuuuuuuuuuuuuuuuuuuuuuuu')
-    console.log(this._areas)
-    console.log(this._chart)
-    console.log(this._timelines)
-    console.log(this._plotters)
-    console.log(this._dataSources)
-    console.log(this)
+    
   }
 
   resetDataSource() {
@@ -578,7 +572,7 @@ export class ChartManager {
 
   // 更新数据
   updateData(dsName, data) {
-    console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
+    
     let ds = this.getDataSource(dsName)
     if (ds === undefined || ds === null) {
       return

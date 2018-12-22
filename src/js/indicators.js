@@ -85,8 +85,8 @@ export class Indicator {
       }
     } catch (e) {
       if (this._exprEnv.getFirstIndex() >= 0) {
-        alert(e)
-        throw e
+        //alert(e)
+        //throw e
       }
     }
   }
@@ -165,16 +165,15 @@ export class MAIndicator extends Indicator {
     this.addParameter(M5)
     this.addParameter(M6)
 
-    if (
-      this._highStockData !== undefined &&
-      this._highStockData.main_lines.length > 0
-    ) {
-      for (const line of this._highStockData.main_lines) {
-        let tmpline = new exprs.OutputExpr(
-          line.name,
-          new exprs.CustomExpr(line.data)
-        )
-        this.addOutput(tmpline)
+    if (this._highStockData !== undefined) {
+      for (const line of this._highStockData.series) {
+        if (line.type == 'main') {
+          let tmpline = new exprs.OutputExpr(
+            line.name,
+            new exprs.CustomExpr(line.data)
+          )
+          this.addOutput(tmpline)
+        }
       }
     } else {
       this.addOutput(
@@ -1174,12 +1173,14 @@ export class BackTestIndicator extends Indicator {
     this._highStockData = highStockData
 
     if (this._highStockData !== undefined) {
-      for (const line of this._highStockData.other_lines) {
-        let tmpline = new exprs.OutputExpr(
-          line.name,
-          new exprs.CustomExpr(line.data)
-        )
-        this.addOutput(tmpline)
+      for (const line of this._highStockData.series) {
+        if (line.type == 'other') {
+          let tmpline = new exprs.OutputExpr(
+            line.name,
+            new exprs.CustomExpr(line.data)
+          )
+          this.addOutput(tmpline)
+        }
       }
     }
 

@@ -26,7 +26,7 @@
     <div style="z-index:1">
       <div class="chart_toolbar_minisep"></div>
       <!-- Periods -->
-      <div class="chart_dropdown" id="chart_toolbar_periods_vert">
+      <div class="chart_dropdown" id="chart_toolbar_periods_vert" style="display:none">
         <div class="chart_dropdown_t"><a class="chart_str_period">周期</a></div>
         <div class="chart_dropdown_data" style="margin-left: -58px;">
           <table>
@@ -106,7 +106,7 @@
           </table>
         </div>
       </div>
-      <div id="chart_toolbar_periods_horz">
+      <div id="chart_toolbar_periods_horz" style="display:none">
         <ul
           class="chart_toolbar_tabgroup"
           style="padding-left:5px; padding-right:11px;"
@@ -159,12 +159,14 @@
       <div
         id="chart_show_indicator"
         class="chart_toolbar_button chart_str_indicator_cap selected"
+        style="display:none"
       >
         技术指标
       </div>
       <div
         id="chart_show_tools"
         class="chart_toolbar_button chart_str_tools_cap"
+        style="display:none"
       >
         画线工具
       </div>
@@ -175,7 +177,7 @@
         <a name="light" class="chart_icon chart_icon_theme_light"></a>
       </div>
 
-      <div class="chart_dropdown" id="chart_dropdown_settings">
+      <div class="chart_dropdown" id="chart_dropdown_settings" style="display:none">
         <div class="chart_dropdown_t">
           <a class="chart_str_settings">更多</a>
         </div>
@@ -270,8 +272,9 @@
         class="chart_dropdown"
         id="chart_language_setting_div"
         style="padding-left: 5px;"
+        
       >
-        <div class="chart_dropdown_t">
+        <div class="chart_dropdown_t" style="display:none" >
           <a class="chart_language_setting">语言(LANG)</a>
         </div>
         <div
