@@ -186,7 +186,7 @@ export default class HighStockData {
     return ret
   }
 
-  update2(series_index, data) {
+  update(series_index, data) {
     let index = -1
     let signals_index = -1
     let first_time

@@ -7587,7 +7587,7 @@
 
       $('#btnUpdate2').click(() => {
         // 更新 K 线
-        highStockData.update2(0, [
+        highStockData.update(0, [
           {
             close: 2739,
             high: 2748,
@@ -7633,7 +7633,7 @@
 
       $('#btnUpdate3').click(() => {
         // 更新成交量, 也可传对象数组
-        highStockData.update2(1, [
+        highStockData.update(1, [
           [1542211200000, 2916857],
           [1542297600000, 3928141],
           [1542556800000, 3024680],
@@ -7642,7 +7642,7 @@
         ])
 
         // 更新 HH
-        highStockData.update2(2, [
+        highStockData.update(2, [
           {
             x: 1542211200000,
             y: 3398
@@ -7666,7 +7666,7 @@
         ])
 
         // 更新 LL
-        highStockData.update2(3, [
+        highStockData.update(3, [
           {
             x: 1542211200000,
             y: 2673
@@ -7690,7 +7690,7 @@
         ])
 
         // 更新 ATR
-        highStockData.update2(4, [
+        highStockData.update(4, [
           {
             x: 1542211200000,
             y: 83.1154
@@ -7715,7 +7715,7 @@
 
         // 更新信号
 
-        highStockData.update2(5, [
+        highStockData.update(5, [
           {
             color: 'black',
             text: 'SK Lot: 8',
